@@ -35,11 +35,11 @@ public class UserDAOImpl implements UserDAO {
 	
 	@Override
 	public void updateUser(User user) {
-		User usr = getUserById(user.getUserId());
+		/*User usr = getUserById(user.getUserId());
 		 usr.setMailId(user.getMailId());
 		 usr.setPhoneNumber(user.getPhoneNumber());
 		 usr.setTerms(user.getTerms());
-		 usr.setStatus(user.getStatus());
+		 usr.setStatus(user.getStatus());*/
 		
 		entityManager.flush();
 	}
@@ -49,7 +49,11 @@ public class UserDAOImpl implements UserDAO {
 		entityManager.remove(getUserById(userId));
 	}
 	
-	
+	@Override
+	public int maxRecordId() {
+		String max_id = "SELECT max(u.user_id) FROM User u";
+		return (int) entityManager.createQuery(max_id).getResultList().get(0);
+	}
 	
 
 }

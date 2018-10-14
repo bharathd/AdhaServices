@@ -1,11 +1,11 @@
 package com.app.adha.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+
 import java.util.Date;
 import java.io.Serializable;
 
@@ -30,13 +30,13 @@ public class User implements Serializable{
     private String phoneNumber;
     
 	@Column(name="user_roll")
-    private String userRoll;
+    private int userRoll;
     
     @Column(name="status")
-    private String status;
+    private int status;
     
     @Column(name="created_date")
-    private Date createdDate;
+    private String createdDate;
     
     @Column(name="created_by")
     private String createdBy;
@@ -45,7 +45,7 @@ public class User implements Serializable{
     private String userName;
     
     @Column(name="terms_conditions")
-    private String terms;
+    private int terms;
 
 	public int getUserId() {
 		return userId;
@@ -63,27 +63,27 @@ public class User implements Serializable{
 		this.phoneNumber = phoneNumber;
 	}
 
-	public String getUserRoll() {
+	public int getUserRoll() {
 		return userRoll;
 	}
 
-	public void setUserRoll(String userRoll) {
+	public void setUserRoll(int userRoll) {
 		this.userRoll = userRoll;
 	}
 
-	public String getStatus() {
+	public int getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 
-	public Date getCreatedDate() {
+	public String getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(String createdDate) {
 		this.createdDate = createdDate;
 	}
 
@@ -103,11 +103,11 @@ public class User implements Serializable{
 		this.userName = userName;
 	}
 
-	public String getTerms() {
+	public int getTerms() {
 		return terms;
 	}
 
-	public void setTerms(String terms) {
+	public void setTerms(int terms) {
 		this.terms = terms;
 	}
 

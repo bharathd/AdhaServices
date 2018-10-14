@@ -41,6 +41,21 @@ public class UserDetails implements Serializable{
 	
 	@Column(name="logged_type")
 	private String loggedType;
+	
+	@Column(name="country")
+	private String country;
+	
+	@Column(name = "state")
+	private String state;
+	
+	@Column(name = "height")
+	private float height;
+	
+	@Column(name = "weight")
+	private float weight;
+	
+	@Column(name = "color")
+	private String color;
 
 	public int getUserDetailsId() {
 		return userDetailsId;
@@ -104,6 +119,46 @@ public class UserDetails implements Serializable{
 
 	public void setLoggedType(String loggedType) {
 		this.loggedType = loggedType;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public float getHeight() {
+		return height;
+	}
+
+	public void setHeight(float height) {
+		this.height = height;
+	}
+
+	public float getWeight() {
+		return weight;
+	}
+
+	public void setWeight(float weight) {
+		this.weight = weight;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
 	}
 	
     
