@@ -45,4 +45,20 @@ public class OtpController {
                return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
     
+    @PostMapping(value="/verify", headers="Accept=application/json")
+	public String verifyOTP(@RequestBody Otp otp, UriComponentsBuilder ucBuilder) {
+    	    List<Otp> otp_info =  otpService.getOtpByPhoneNumber(otp.getPhoneNumber());
+    	    
+    	    if(otp_info.size() >= 1) {
+    	    	if((otp_info.get(0).getPhoneNumber().equals(otp.getPhoneNumber())) && (otp_info.get(0).getOtpNumber().equals(otp.getOtpNumber()))){
+    	    	   return "Success";
+    	    	}else {
+    	    		return "Not Matched";
+    	    	}
+    	    }else {
+               
+               return "Phone Number Not Valid";
+    	    }
+    }
+    
 }
