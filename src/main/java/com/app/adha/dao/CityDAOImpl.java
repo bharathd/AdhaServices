@@ -25,7 +25,7 @@ public class CityDAOImpl implements CityDAO{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<City> getAllCitys() {
-		String hql = "FROM Otp as o ORDER BY o.userId";
+		String hql = "FROM City as c ORDER BY c.cityId";
 		return (List<City>) entityManager.createQuery(hql).getResultList();
 	}	
 	
@@ -33,5 +33,10 @@ public class CityDAOImpl implements CityDAO{
 	public void addCity(City city) {
 		entityManager.persist(city);
 	}
-
+   
+	@Override
+	public void deleteCity(int cityId) {
+		String update_query = "update City set status = :status where id = :id";
+		entityManager.createQuery(update_query).setParameter("status", 3).setParameter("id", cityId).executeUpdate();
+	}
 }

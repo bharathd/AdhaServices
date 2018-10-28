@@ -24,17 +24,14 @@ public class UserDetails implements Serializable{
 	@Column(name="user_id")
 	private int userId;
 	
-	@Column(name="firstname")
-	private String firstName;
-	
-	@Column(name="lastname")
-	private String lastName;
+	@Column(name="name")
+	private String name;
 	
 	@Column(name="gender")
 	private String gender;
 	
 	@Column(name="updated_date")
-	private Date updatedDate;
+	private String updatedDate;
 	
 	@Column(name="updated_by")
 	private int updatedBy;
@@ -42,20 +39,14 @@ public class UserDetails implements Serializable{
 	@Column(name="logged_type")
 	private String loggedType;
 	
-	@Column(name="country")
-	private String country;
-	
-	@Column(name = "state")
-	private String state;
+	@Column(name="city")
+	private int city;
 	
 	@Column(name = "height")
 	private float height;
 	
-	@Column(name = "weight")
-	private float weight;
-	
-	@Column(name = "color")
-	private String color;
+	@Column(name="mail_id")
+    private String mailId;
 
 	public int getUserDetailsId() {
 		return userDetailsId;
@@ -73,20 +64,14 @@ public class UserDetails implements Serializable{
 		this.userId = userId;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	
+
+	public String getName() {
+		return name;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getGender() {
@@ -97,11 +82,11 @@ public class UserDetails implements Serializable{
 		this.gender = gender;
 	}
 
-	public Date getUpdatedDate() {
+	public String getUpdatedDate() {
 		return updatedDate;
 	}
 
-	public void setUpdatedDate(Date updatedDate) {
+	public void setUpdatedDate(String updatedDate) {
 		this.updatedDate = updatedDate;
 	}
 
@@ -121,23 +106,16 @@ public class UserDetails implements Serializable{
 		this.loggedType = loggedType;
 	}
 
-	public String getCountry() {
-		return country;
+	public int getCity() {
+		return city;
 	}
 
-	public void setCountry(String country) {
-		this.country = country;
+	public void setCity(int city) {
+		this.city = city;
 	}
 
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	public float getHeight() {
+	
+    public float getHeight() {
 		return height;
 	}
 
@@ -145,21 +123,12 @@ public class UserDetails implements Serializable{
 		this.height = height;
 	}
 
-	public float getWeight() {
-		return weight;
-	}
-
-	public void setWeight(float weight) {
-		this.weight = weight;
-	}
-
-	public String getColor() {
-		return color;
-	}
-
-	public void setColor(String color) {
-		this.color = color;
-	}
 	
-    
+    public String getMailId() {
+		return mailId;
+	}
+
+	public void setMailId(String mailId) {
+		this.mailId = mailId;
+	}
 }

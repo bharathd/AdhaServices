@@ -8,15 +8,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.app.adha.dao.PhotoDAO;
-import com.app.adha.entity.Photo;
+import com.app.adha.dao.GiftDAO;
+import com.app.adha.entity.Gift;
 import com.app.adha.util.UtilMethods;
 
 @Service
-public class PhotoServiceImpl implements PhotoService{
+public class GiftServiceImpl implements GiftService{
 	
 	@Autowired
-	private PhotoDAO photoDAO;
+	private GiftDAO giftDAO;
 	
 	@Autowired
 	private UtilMethods utilMethod;
@@ -26,27 +26,26 @@ public class PhotoServiceImpl implements PhotoService{
     Date dateobj = new Date();
     
 	@Override
-	public Photo getPhotoById(int photoId) {
-		Photo photo = photoDAO.getPhotoById(photoId);
-		return photo;
+	public Gift getGiftById(int giftId) {
+		Gift gift = giftDAO.getGiftById(giftId);
+		return gift;
 	}	
 	
 	@Override
-	public List<Photo> getAllPhotos(){
-		return photoDAO.getAllPhotos();
+	public List<Gift> getAllGifts(){
+		return giftDAO.getAllGifts();
 	}
 	
 	@Override
-	public void addPhoto(Photo photo){
-		photo.setUplodedDate(df.format(dateobj));
-		photo.setStatus(UtilMethods.ACTIVE);
-		photoDAO.addPhoto(photo);
+	public void addGift(Gift gift){
+		gift.setCreatedDate(df.format(dateobj));
+		gift.setStatus(UtilMethods.ACTIVE);
+		giftDAO.addGift(gift);
 	}
 	
 	@Override
-	public void deletePhoto(int photoId) {
-		photoDAO.deletePhoto(photoId);
+	public void deleteGift(int giftId) {
+		giftDAO.deleteGift(giftId);
 	}
-
 
 }

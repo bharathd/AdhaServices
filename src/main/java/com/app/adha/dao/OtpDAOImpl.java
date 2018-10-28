@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.app.adha.entity.Otp;
+import com.app.adha.entity.UserDetails;
 
 @Transactional
 @Repository
@@ -18,21 +19,20 @@ public class OtpDAOImpl implements OtpDAO{
 	private EntityManager entityManager;	
 	
 	@Override
-	public Otp getOtpById(int userId) {
-		return entityManager.find(Otp.class, userId);
+	public List<Otp> getOtpByPhoneNumber(String phoneNumber) {
+		return (List<Otp>) entityManager.createQuery("from Otp where phone_number = :phone_number ").setParameter("phone_number", phoneNumber).getResultList();
 	}
 	
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Otp> getAllOtps() {
-		String hql = "FROM Otp as o ORDER BY o.userId";
-		return (List<Otp>) entityManager.createQuery(hql).getResultList();
-	}	
 	
-	@Override
-	public void addOtp(Otp otp) {
-		entityManager.persist(otp);
-	}
+   @Override
+	public void addOrUpdateOtp(Otp otp) {
+		List<Otp> list_otp = getOtpByPhoneNumber(otp.getPhoneNumber());
+		if(list_otp.size()>0) {
+			String update_query = "update Otp set otp_num = :otp_num where phone_number = :phone_number";
+		    entityManager.createQuery(update_query).setParameter("otp_num", otp.getOtpNumber()).setParameter("phone_number", otp.getPhoneNumber()).executeUpdate();
+		}else {
+			entityManager.persist(otp);
+	}}
 	
 
 }

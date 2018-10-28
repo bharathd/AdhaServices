@@ -9,4 +9,5 @@ public interface PlanDAO {
 	List<Plan> getAllPlans();
 	Plan getPlanById(int planId);
     void addPlan(Plan plan);
+    void deletePlan(int planId);
 }

@@ -26,27 +26,22 @@ public class OtpController {
 	@Autowired
     OtpService otpService;
 	
-	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Otp> getOtpById(@PathVariable("id") int id) {
-        System.out.println("Fetching User with id " + id);
-        Otp otp = otpService.getOtpById(id);
-        if (otp == null) {
-            return new ResponseEntity<Otp>(HttpStatus.NOT_FOUND);
+	@GetMapping(value = "/{phoneNumber}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Otp>> getOtpById(@PathVariable("phoneNumber") String phoneNumber) {
+        System.out.println("Fetching OTP with id " + phoneNumber);
+        List<Otp> otp = otpService.getOtpByPhoneNumber(phoneNumber);
+        if (otp.size() == 0) {
+            return new ResponseEntity<List<Otp>>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Otp>(otp, HttpStatus.OK);
+        return new ResponseEntity<List<Otp>>(otp, HttpStatus.OK);
     }
 
-    @GetMapping("otps")
-	public ResponseEntity<List<Otp>> getAllOtps() {
-		List<Otp> list = otpService.getAllOtps();
-		return new ResponseEntity<List<Otp>>(list, HttpStatus.OK);
-	}
     
-    @PostMapping(value="/addotp", headers="Accept=application/json")
-	public ResponseEntity<Void> addOtp(@RequestBody Otp otp, UriComponentsBuilder ucBuilder) {
-    	       otpService.addOtp(otp);
+    
+    @PostMapping(value="/genrateotp", headers="Accept=application/json")
+	public ResponseEntity<Void> addOrUpdateOtp(@RequestBody String phoneNumber, UriComponentsBuilder ucBuilder) {
+    	       otpService.addOrUpdateOtp(phoneNumber);
                HttpHeaders headers = new HttpHeaders();
-               headers.setLocation(ucBuilder.path("/otp/{id}").buildAndExpand(otp.getUserId()).toUri());
                return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
     

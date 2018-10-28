@@ -23,14 +23,11 @@ public class User implements Serializable{
     @Column(name="user_id")
     private int userId;
 
-    @Column(name="mail_id")
-    private String mailId;
-
     @Column(name="phone_number")
     private String phoneNumber;
     
-	@Column(name="user_roll")
-    private int userRoll;
+    @Column(name="role")
+    private int role;
     
     @Column(name="status")
     private int status;
@@ -63,12 +60,13 @@ public class User implements Serializable{
 		this.phoneNumber = phoneNumber;
 	}
 
-	public int getUserRoll() {
-		return userRoll;
+	
+	public int getRole() {
+		return role;
 	}
 
-	public void setUserRoll(int userRoll) {
-		this.userRoll = userRoll;
+	public void setRole(int role) {
+		this.role = role;
 	}
 
 	public int getStatus() {
@@ -111,12 +109,6 @@ public class User implements Serializable{
 		this.terms = terms;
 	}
 
-	public String getMailId() {
-		return mailId;
-	}
-
-	public void setMailId(String mailId) {
-		this.mailId = mailId;
-	}
+	
 
 }

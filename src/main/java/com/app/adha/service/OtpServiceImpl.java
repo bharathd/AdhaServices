@@ -1,5 +1,8 @@
 package com.app.adha.service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -17,34 +20,36 @@ public class OtpServiceImpl implements OtpService{
 	private OtpDAO otpDAO;
 	
 	@Autowired
+	private Otp otp;
+	
+	@Autowired
 	private UtilMethods utilMethod;
 	
+	//getting current date and time using Date class
+    DateFormat df = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
+    Date dateobj = new Date();
+	
 	@Override
-	public Otp getOtpById(int userId) {
-		Otp otp = otpDAO.getOtpById(userId);
+	public List<Otp> getOtpByPhoneNumber(String phoneNumber) {
+		List<Otp> otp = otpDAO.getOtpByPhoneNumber(phoneNumber);
 		return otp;
 	}	
 	
-	@Override
-	public List<Otp> getAllOtps(){
-		return otpDAO.getAllOtps();
-	}
 	
 	@Override
-	public void addOtp(Otp otp){
-		
-		String to_mail = otp.getMailId();
-		
+	public void addOrUpdateOtp(String phoneNumber){
 		
 		Random rnd = new Random();
 	    int number = rnd.nextInt(999999);
 
 	    // this will convert any number sequence into 6 character.
 	    String otpNumber = String.format("%06d", number);
+	    otp.setPhoneNumber(phoneNumber);
 	    otp.setOtpNumber(otpNumber);
-	    otpDAO.addOtp(otp);
+	    otp.setCreatedDate(df.format(dateobj));
+	    otpDAO.addOrUpdateOtp(otp);
 	    
-	    utilMethod.sendMail(to_mail, otpNumber);
+	    utilMethod.genrateOTP(phoneNumber, otpNumber);
     }
 
 }

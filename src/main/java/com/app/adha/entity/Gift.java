@@ -11,39 +11,42 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "state")
-public class State implements Serializable{
+@Table(name = "gift")
+public class Gift implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
-    private int stateId;
+    @Column(name="gift_id")
+    private int giftId;
     
     @Column(name="name")
-    private String stateName;
+	private String giftName;
     
     @Column(name="created_by")
     private int createdBy;
-    
-    @Column(name="created_date")
-    private Date createdDate;
+	
+	@Column(name="created_date")
+    private String createdDate;
+	
+	@Column(name="status")
+    private int status;
 
-	public int getStateId() {
-		return stateId;
+	public int getGiftId() {
+		return giftId;
 	}
 
-	public void setStateId(int stateId) {
-		this.stateId = stateId;
+	public void setGiftId(int giftId) {
+		this.giftId = giftId;
 	}
 
-	public String getStateName() {
-		return stateName;
+	public String getGiftName() {
+		return giftName;
 	}
 
-	public void setStateName(String stateName) {
-		this.stateName = stateName;
+	public void setGiftName(String giftName) {
+		this.giftName = giftName;
 	}
 
 	public int getCreatedBy() {
@@ -54,14 +57,22 @@ public class State implements Serializable{
 		this.createdBy = createdBy;
 	}
 
-	public Date getCreatedDate() {
+	public String getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(String createdDate) {
 		this.createdDate = createdDate;
 	}
-    
-    
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	
+	
 
 }

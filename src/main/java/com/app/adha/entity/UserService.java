@@ -28,12 +28,10 @@ public class UserService implements Serializable{
     private int createdBy;
 	
 	@Column(name="created_date")
-    private Date createdDate;
+    private String createdDate;
 	
-	@Column(name="amount")
-    private double amount;
-
-	public int getServiceId() {
+	
+    public int getServiceId() {
 		return serviceId;
 	}
 
@@ -57,24 +55,13 @@ public class UserService implements Serializable{
 		this.createdBy = createdBy;
 	}
 
-	public Date getCreatedDate() {
+	public String getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(String createdDate) {
 		this.createdDate = createdDate;
 	}
 
-	public double getAmount() {
-		return amount;
-	}
-
-	public void setAmount(double amount) {
-		this.amount = amount;
-	}
 	
-	
-	
-	
-
 }

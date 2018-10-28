@@ -25,7 +25,7 @@ public class UserServiceDAOImpl implements UserServiceDAO{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserService> getAllServices() {
-		String hql = "FROM Otp as o ORDER BY o.userId";
+		String hql = "FROM UserService as s ORDER BY s.serviceId";
 		return (List<UserService>) entityManager.createQuery(hql).getResultList();
 	}	
 	

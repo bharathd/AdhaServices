@@ -9,4 +9,5 @@ public interface CityService {
 	List<City> getAllCitys();
 	City getCityById(int cityId);
     void addCity(City city);
+    void deleteCity(int cityId);
 }

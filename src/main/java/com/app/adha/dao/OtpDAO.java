@@ -6,8 +6,7 @@ import com.app.adha.entity.Otp;
 
 public interface OtpDAO {
 	
-	List<Otp> getAllOtps();
-    Otp getOtpById(int userId);
-    void addOtp(Otp otp);
+	List<Otp> getOtpByPhoneNumber(String phoneNumber);
+	void addOrUpdateOtp(Otp otp);
 
 }

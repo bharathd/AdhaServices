@@ -26,13 +26,19 @@ public class PlanDAOImpl implements PlanDAO{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Plan> getAllPlans() {
-		String hql = "FROM Otp as o ORDER BY o.userId";
+		String hql = "FROM Plan as p ORDER BY p.planId";
 		return (List<Plan>) entityManager.createQuery(hql).getResultList();
 	}	
 	
 	@Override
 	public void addPlan(Plan plan) {
 		entityManager.persist(plan);
+	}
+	
+	@Override
+	public void deletePlan(int planId) {
+		String update_query = "update Plan set status = :status where id = :id";
+		entityManager.createQuery(update_query).setParameter("status", 2).setParameter("id", planId).executeUpdate();
 	}
 
 }

@@ -35,6 +35,9 @@ public class Plan implements Serializable{
 	
 	@Column(name="created_date")
     private Date createdDate;
+	
+	@Column(name="status")
+    private int status;
 
 	public int getPlanId() {
 		return planId;
@@ -82,6 +85,14 @@ public class Plan implements Serializable{
 
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 	
 	

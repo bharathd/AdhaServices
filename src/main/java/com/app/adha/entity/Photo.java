@@ -31,7 +31,13 @@ public class Photo implements Serializable{
     private int uplodedBy;
 	
 	@Column(name="uploded_date")
-    private Date uplodedDate;
+    private String uplodedDate;
+	
+	@Column(name="status")
+    private int status;
+	
+	@Column(name="profile_photo")
+	private int profilePhoto;
 
 	public int getPhotoId() {
 		return photoId;
@@ -65,12 +71,28 @@ public class Photo implements Serializable{
 		this.uplodedBy = uplodedBy;
 	}
 
-	public Date getUplodedDate() {
+	public String getUplodedDate() {
 		return uplodedDate;
 	}
 
-	public void setUplodedDate(Date uplodedDate) {
+	public void setUplodedDate(String uplodedDate) {
 		this.uplodedDate = uplodedDate;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public int getProfilePhoto() {
+		return profilePhoto;
+	}
+
+	public void setProfilePhoto(int profilePhoto) {
+		this.profilePhoto = profilePhoto;
 	}
 	
 	

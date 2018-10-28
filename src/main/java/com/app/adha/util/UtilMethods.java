@@ -14,21 +14,21 @@ public class UtilMethods {
 	@Autowired
     private  JavaMailSender sender;
 	
-	// model, customer, admin and super-admin Rolls constants
-	public static int MODEL = 1;
-	public static int CUSTOMER =2;
-	public static int ADMIN = 3;
-	public static int SUPERADMIN = 4;
+	// model, customer, admin and super-admin Roles constants
+	public static int ROLE_MODEL = 0;
+	public static int ROLE_CUSTOMER = 1;
+	public static int ROLE_ADMIN = 2;
+	public static int ROLE_SUPERADMIN = 3;
 	
 	//account status constants
+	public static int DEACTIVE = 0;
 	public static int ACTIVE = 1;
-	public static int VERIFY = 2;
-	public static int INACTIVE = 3;
+	public static int INPROGRESS = 2;
 	
 	//tearms and conditions constants
 	
 	public static int YES = 1;
-	public static int NO = 2;
+	public static int NO = 0;
 	
 	
 	public String sendMail(String to_mail, String otp_number) {
@@ -47,5 +47,9 @@ public class UtilMethods {
         sender.send(message);
         return "Mail Sent Success!";
     }
-
+	
+	public String genrateOTP(String phoneNumber, String otp_number) {
+	  String otp_url = "http://onlinebulksmslogin.com/spanelv2/api.php?username=codelite@labs&to="+phoneNumber+"&from=Adah&message="+otp_number;
+	  return "SMS Sent Success!";
+	}
 }

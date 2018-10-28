@@ -40,23 +40,27 @@ public class UserController {
 		return new ResponseEntity<List<User>>(list, HttpStatus.OK);
 	}
     
-    @PostMapping(value="/adduser", headers="Accept=application/json")
-	public ResponseEntity<Void> addUser(@RequestBody User user, UriComponentsBuilder ucBuilder) {
-    	       userService.addUser(user);
-               HttpHeaders headers = new HttpHeaders();
-               headers.setLocation(ucBuilder.path("/user/{id}").buildAndExpand(user.getUserId()).toUri());
-               return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+    @PostMapping(value="/login", headers="Accept=application/json")
+	public ResponseEntity<List<User>> addUser(@RequestBody User user) {
+    	
+    	    String message =  userService.addUser(user);
+    	    List<User> user_info = userService.getUserByPhoneNumber(user.getPhoneNumber());
+    	    if(message.equals("Account created")) 
+    	      return new ResponseEntity<List<User>>(user_info, HttpStatus.CREATED);
+    	    else 
+    	      return new ResponseEntity<List<User>>(user_info,HttpStatus.OK);
+    	    
     }
     
 
 	@PutMapping("/updateuser")
-	public ResponseEntity<User> updateArticle(@RequestBody User user) {
+	public ResponseEntity<User> updateUser(@RequestBody User user) {
 		userService.updateUser(user);
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/deleteuser/{id}")
-	public ResponseEntity<Void> deleteArticle(@PathVariable("id") Integer id) {
+	public ResponseEntity<Void> deleteUser(@PathVariable("id") Integer id) {
 		userService.deleteUser(id);
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}	

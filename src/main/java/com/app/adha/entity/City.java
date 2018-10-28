@@ -31,7 +31,10 @@ public class City implements Serializable{
     private int createdBy;
     
     @Column(name="created_date")
-    private Date createdDate;
+    private String createdDate;
+    
+    @Column(name="status")
+    private int status;
 
 	public int getCityId() {
 		return cityId;
@@ -65,12 +68,20 @@ public class City implements Serializable{
 		this.createdBy = createdBy;
 	}
 
-	public Date getCreatedDate() {
+	public String getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(String createdDate) {
 		this.createdDate = createdDate;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
     
     

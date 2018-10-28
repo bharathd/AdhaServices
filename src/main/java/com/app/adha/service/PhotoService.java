@@ -9,5 +9,5 @@ public interface PhotoService {
 	List<Photo> getAllPhotos();
 	Photo getPhotoById(int photoId);
     void addPhoto(Photo photo);
-
+    void deletePhoto(int photoId);
 }

@@ -25,13 +25,19 @@ public class PhotoDAOImpl implements PhotoDAO{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Photo> getAllPhotos() {
-		String hql = "FROM Otp as o ORDER BY o.userId";
+		String hql = "FROM Photo as p ORDER BY p.userId";
 		return (List<Photo>) entityManager.createQuery(hql).getResultList();
 	}	
 	
 	@Override
 	public void addPhoto(Photo photo) {
 		entityManager.persist(photo);
+	}
+	
+	@Override
+	public void deletePhoto(int photoId) {
+		String update_query = "update Photo set status = :status where id = :id";
+		entityManager.createQuery(update_query).setParameter("status", 3).setParameter("id", photoId).executeUpdate();
 	}
 
 }

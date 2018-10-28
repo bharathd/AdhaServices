@@ -30,5 +30,8 @@ public class PlanServiceImpl implements PlanService{
 		planDAO.addPlan(plan);
 	}
 
-
+	@Override
+	public void deletePlan(int planId) {
+		planDAO.deletePlan(planId);
+	}
 }

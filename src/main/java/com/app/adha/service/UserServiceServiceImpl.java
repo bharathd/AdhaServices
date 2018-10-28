@@ -1,5 +1,8 @@
 package com.app.adha.service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,10 @@ public class UserServiceServiceImpl implements UserServiceService{
 	@Autowired
 	private UserServiceDAO serviceDAO;
 	
+	//getting current date and time using Date class
+    DateFormat df = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
+    Date dateobj = new Date();
+	
 	@Override
 	public UserService getServiceById(int schedulerId) {
 		UserService scheduler = serviceDAO.getServiceById(schedulerId);
@@ -27,6 +34,7 @@ public class UserServiceServiceImpl implements UserServiceService{
 	
 	@Override
 	public void addService(UserService service){
+		service.setCreatedDate(df.format(dateobj));
 		serviceDAO.addService(service);
 	}
 

@@ -1,6 +1,9 @@
 package com.app.adha.dao;
 
+import com.app.adha.entity.Otp;
 import com.app.adha.entity.User;
+import com.app.adha.util.UtilMethods;
+
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,9 +20,16 @@ public class UserDAOImpl implements UserDAO {
 	private EntityManager entityManager;	
 	
 	@Override
+	public List<User> getUserByPhoneNumber(String phoneNumber) {
+		
+		return (List<User>) entityManager.createQuery("from User where phone_number = :phone_number ").setParameter("phone_number", phoneNumber).getResultList();
+	}
+	
+	@Override
 	public User getUserById(int userId) {
 		return entityManager.find(User.class, userId);
 	}
+	
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -35,23 +45,19 @@ public class UserDAOImpl implements UserDAO {
 	
 	@Override
 	public void updateUser(User user) {
-		/*User usr = getUserById(user.getUserId());
-		 usr.setMailId(user.getMailId());
-		 usr.setPhoneNumber(user.getPhoneNumber());
-		 usr.setTerms(user.getTerms());
-		 usr.setStatus(user.getStatus());*/
-		
-		entityManager.flush();
+	   entityManager.flush();
 	}
 	
 	@Override
 	public void deleteUser(int userId) {
-		entityManager.remove(getUserById(userId));
+		String update_query = "update User set status = :status where user_id = :user_id";
+		entityManager.createQuery(update_query).setParameter("status", 3).setParameter("user_id", userId).executeUpdate();
+		
 	}
 	
 	@Override
 	public int maxRecordId() {
-		String max_id = "SELECT max(u.user_id) FROM User u";
+		String max_id = "SELECT max(u.userId) FROM User u";
 		return (int) entityManager.createQuery(max_id).getResultList().get(0);
 	}
 	

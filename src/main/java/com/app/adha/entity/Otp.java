@@ -10,8 +10,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.stereotype.Component;
+
+
 @Entity
 @Table(name = "otp")
+@Component
 public class Otp implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -24,9 +28,6 @@ public class Otp implements Serializable{
 	@Column(name="user_id")
     private int userId;
 	
-	@Column(name="mail_id")
-    private String mailId;
-	
 	@Column(name="phone_number")
     private String phoneNumber;
 	
@@ -34,7 +35,7 @@ public class Otp implements Serializable{
     private String otpNumber;
 	
 	@Column(name="created_date")
-    private Date createdDate;
+    private String createdDate;
 
 	public int getOtpId() {
 		return otpId;
@@ -52,15 +53,8 @@ public class Otp implements Serializable{
 		this.userId = userId;
 	}
 
-	public String getMailId() {
-		return mailId;
-	}
-
-	public void setMailId(String mailId) {
-		this.mailId = mailId;
-	}
-
-	public String getPhoneNumber() {
+	
+    public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
@@ -76,11 +70,11 @@ public class Otp implements Serializable{
 		this.otpNumber = otpNumber;
 	}
 
-	public Date getCreatedDate() {
+	public String getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(String createdDate) {
 		this.createdDate = createdDate;
 	}
 	
