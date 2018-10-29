@@ -31,10 +31,10 @@ public class Scheduler implements Serializable{
     private int adminId;
 	
 	@Column(name="start_time")
-    private Date startTime;
+    private String startTime;
 	
 	@Column(name="end_time")
-    private Date endTime;
+    private String endTime;
 	
 	@Column(name="service_id")
     private int serviceId;
@@ -49,13 +49,13 @@ public class Scheduler implements Serializable{
     private int createdBy;
 	
 	@Column(name="created_date")
-    private Date createdDate;
+    private String createdDate;
 	
 	@Column(name="updated_by")
     private int updatedBy;
 	
 	@Column(name="updated_date")
-    private Date updatedDate;
+    private String updatedDate;
 
 	public int getSchedulerId() {
 		return schedulerId;
@@ -89,19 +89,19 @@ public class Scheduler implements Serializable{
 		this.adminId = adminId;
 	}
 
-	public Date getStartTime() {
+	public String getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(Date startTime) {
+	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
 
-	public Date getEndTime() {
+	public String getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(Date endTime) {
+	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
 
@@ -137,11 +137,11 @@ public class Scheduler implements Serializable{
 		this.createdBy = createdBy;
 	}
 
-	public Date getCreatedDate() {
+	public String getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(String createdDate) {
 		this.createdDate = createdDate;
 	}
 
@@ -153,11 +153,11 @@ public class Scheduler implements Serializable{
 		this.updatedBy = updatedBy;
 	}
 
-	public Date getUpdatedDate() {
+	public String getUpdatedDate() {
 		return updatedDate;
 	}
 
-	public void setUpdatedDate(Date updatedDate) {
+	public void setUpdatedDate(String updatedDate) {
 		this.updatedDate = updatedDate;
 	}
 	

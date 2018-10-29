@@ -25,7 +25,7 @@ public class SchedulerDAOImpl implements SchedulerDAO{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Scheduler> getAllSchedulers() {
-		String hql = "FROM Otp as o ORDER BY o.userId";
+		String hql = "FROM Scheduler as s ORDER BY s.schedulerId";
 		return (List<Scheduler>) entityManager.createQuery(hql).getResultList();
 	}	
 	

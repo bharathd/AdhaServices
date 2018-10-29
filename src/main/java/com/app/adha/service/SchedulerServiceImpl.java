@@ -1,5 +1,8 @@
 package com.app.adha.service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,10 @@ public class SchedulerServiceImpl implements SchedulerService{
 	@Autowired
 	private SchedulerDAO schedulerDAO;
 	
+	//getting current date and time using Date class
+    DateFormat df = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
+    Date dateobj = new Date();
+	
 	@Override
 	public Scheduler getSchedulerById(int schedulerId) {
 		Scheduler scheduler = schedulerDAO.getSchedulerById(schedulerId);
@@ -27,6 +34,7 @@ public class SchedulerServiceImpl implements SchedulerService{
 	
 	@Override
 	public void addScheduler(Scheduler scheduler){
+		scheduler.setCreatedDate(df.format(dateobj));
 		schedulerDAO.addScheduler(scheduler);
 	}
 
