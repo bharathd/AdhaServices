@@ -2,6 +2,9 @@ package com.app.adha.util;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.net.URL;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -49,7 +52,21 @@ public class UtilMethods {
     }
 	
 	public String genrateOTP(String phoneNumber, String otp_number) {
-	  String otp_url = "http://onlinebulksmslogin.com/spanelv2/api.php?username=codelite@labs&to="+phoneNumber+"&from=Adah&message="+otp_number;
+	  String otp_url = "http://onlinebulksmslogin.com/spanelv2/api.php?username=codelitelabs&password=codelite@labs&to="+phoneNumber+"&from=Adah&message="+otp_number;
+	  
+	try {
+		URL url = new URL(otp_url);
+		HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+		connection.setDoOutput(true);
+		if(!connection.getResponseMessage().equals("OK"))
+			return "SMS Not Sent";
+	   
+	} catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+      
+      
 	  return "SMS Sent Success!";
 	}
 }

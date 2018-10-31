@@ -16,11 +16,13 @@ import com.app.adha.entity.UserDetails;
 public class OtpDAOImpl implements OtpDAO{
 	
 	@PersistenceContext	
-	private EntityManager entityManager;	
+	private EntityManager entityManager;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Otp> getOtpByPhoneNumber(String phoneNumber) {
-		return (List<Otp>) entityManager.createQuery("from Otp where phone_number = :phone_number ").setParameter("phone_number", phoneNumber).getResultList();
+		List<Otp> resultList = (List<Otp>) entityManager.createQuery("from Otp where phone_number = :phone_number ").setParameter("phone_number", phoneNumber).getResultList();
+		return resultList;
 	}
 	
 	

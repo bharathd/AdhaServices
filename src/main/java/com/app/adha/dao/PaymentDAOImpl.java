@@ -26,7 +26,7 @@ public class PaymentDAOImpl implements PaymentDAO{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Payment> getAllPayments() {
-		String hql = "FROM Otp as o ORDER BY o.userId";
+		String hql = "FROM Payment as p ORDER BY p.paymentId";
 		return (List<Payment>) entityManager.createQuery(hql).getResultList();
 	}	
 	

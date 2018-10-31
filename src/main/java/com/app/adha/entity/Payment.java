@@ -31,7 +31,7 @@ public class Payment implements Serializable{
     private int planId;
 	
 	@Column(name="payment_date")
-    private Date paymentDate;
+    private String paymentDate;
 
 	public int getPaymentId() {
 		return paymentId;
@@ -65,11 +65,11 @@ public class Payment implements Serializable{
 		this.planId = planId;
 	}
 
-	public Date getPaymentDate() {
+	public String getPaymentDate() {
 		return paymentDate;
 	}
 
-	public void setPaymentDate(Date paymentDate) {
+	public void setPaymentDate(String paymentDate) {
 		this.paymentDate = paymentDate;
 	}
 	

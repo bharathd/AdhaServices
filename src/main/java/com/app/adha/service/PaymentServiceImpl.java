@@ -1,5 +1,8 @@
 package com.app.adha.service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,10 @@ public class PaymentServiceImpl implements PaymentService{
 	@Autowired
 	private PaymentDAO paymentDAO;
 	
+	//getting current date and time using Date class
+    DateFormat df = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
+    Date dateobj = new Date();
+	
 	@Override
 	public Payment getPaymentById(int paymentId) {
 		Payment payment = paymentDAO.getPaymentById(paymentId);
@@ -27,6 +34,7 @@ public class PaymentServiceImpl implements PaymentService{
 	
 	@Override
 	public void addPayment(Payment payment){
+		payment.setPaymentDate(df.format(dateobj));
 		paymentDAO.addPayment(payment);
 	}
 
