@@ -7,6 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.app.adha.entity.Scheduler;
 import com.app.adha.service.SchedulerService;
 
+@CrossOrigin(origins = { "http://159.65.145.220:8080" }, maxAge = 3000)
 @RestController
 @RequestMapping("/scheduler")
 public class SchedulerController {
@@ -35,6 +37,12 @@ public class SchedulerController {
         return new ResponseEntity<Scheduler>(scheduler, HttpStatus.OK);
     }
 
+    @GetMapping("schedulers/{date}")
+	public ResponseEntity<List<Scheduler>> getSchedulersByDate(@PathVariable("date") int date) {
+		List<Scheduler> list = schedulerService.getSchedulersByDate(date);
+		return new ResponseEntity<List<Scheduler>>(list, HttpStatus.OK);
+	}
+    
     @GetMapping("schedulers")
 	public ResponseEntity<List<Scheduler>> getAllSchedulers() {
 		List<Scheduler> list = schedulerService.getAllSchedulers();

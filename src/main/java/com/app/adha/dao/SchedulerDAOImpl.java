@@ -29,6 +29,13 @@ public class SchedulerDAOImpl implements SchedulerDAO{
 		return (List<Scheduler>) entityManager.createQuery(hql).getResultList();
 	}	
 	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Scheduler> getSchedulersByDate(String start_date, String end_date) {
+		String hql = "FROM Scheduler where (startTime BETWEEN '"+ start_date + "' AND '" + end_date + "')";
+		return (List<Scheduler>) entityManager.createQuery(hql).getResultList();
+	}	
+	
 	@Override
 	public void addScheduler(Scheduler scheduler) {
 		entityManager.persist(scheduler);

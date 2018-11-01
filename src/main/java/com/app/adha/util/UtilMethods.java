@@ -52,7 +52,7 @@ public class UtilMethods {
     }
 	
 	public String genrateOTP(String phoneNumber, String otp_number) {
-	  String otp_url = "http://onlinebulksmslogin.com/spanelv2/api.php?username=codelitelabs&password=codelite@labs&to="+phoneNumber+"&from=Adah&message="+otp_number;
+	  String otp_url = "http://onlinebulksmslogin.com/spanelv2/api.php?username=codelitelabs&password=codelite@labs&to="+phoneNumber+"&from=PACBAG&message="+otp_number;
 	  
 	try {
 		URL url = new URL(otp_url);

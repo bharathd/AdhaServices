@@ -17,6 +17,7 @@ import java.util.List;
 /**
  * Created by Anil on 03/10/18.
  */
+@CrossOrigin(origins = { "http://159.65.145.220:8080" }, maxAge = 3000)
 @RestController
 @RequestMapping("/user")
 public class UserController {
