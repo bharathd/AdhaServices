@@ -19,7 +19,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.app.adha.entity.Notification;
 import com.app.adha.service.NotificationService;
 
-@CrossOrigin(origins = { "http://159.65.145.220:8080" }, maxAge = 3000)
+@CrossOrigin
 @RestController
 @RequestMapping("/notification")
 public class NotificationController {

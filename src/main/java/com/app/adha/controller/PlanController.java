@@ -20,7 +20,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.app.adha.entity.Plan;
 import com.app.adha.service.PlanService;
 
-@CrossOrigin(origins = { "http://159.65.145.220:8080" }, maxAge = 3000)
+@CrossOrigin
 @RestController
 @RequestMapping("/plan")
 public class PlanController {

@@ -6,8 +6,8 @@ import com.app.adha.entity.Photo;
 
 public interface PhotoDAO {
 	
-	List<Photo> getAllPhotos();
-	Photo getPhotoById(int photoId);
+	List<Photo> getAllPhotosByUserId(int userId);
+	Photo getPhotoById(int userId);
     void addPhoto(Photo photo);
     void deletePhoto(int photoId);
 }

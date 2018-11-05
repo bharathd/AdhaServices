@@ -32,8 +32,8 @@ public class PhotoServiceImpl implements PhotoService{
 	}	
 	
 	@Override
-	public List<Photo> getAllPhotos(){
-		return photoDAO.getAllPhotos();
+	public List<Photo> getAllPhotosByUserId(int userId){
+		return photoDAO.getAllPhotosByUserId(userId);
 	}
 	
 	@Override

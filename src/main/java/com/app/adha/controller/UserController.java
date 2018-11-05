@@ -17,7 +17,8 @@ import java.util.List;
 /**
  * Created by Anil on 03/10/18.
  */
-@CrossOrigin(origins = { "http://159.65.145.220:8080" }, maxAge = 3000)
+
+@CrossOrigin
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -25,6 +26,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> getUserById(@PathVariable("id") int id) {
         System.out.println("Fetching User with id " + id);
@@ -35,11 +37,13 @@ public class UserController {
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
+    
     @GetMapping("users")
 	public ResponseEntity<List<User>> getAllUsers() {
 		List<User> list = userService.getAllUsers();
 		return new ResponseEntity<List<User>>(list, HttpStatus.OK);
 	}
+    
     
     @PostMapping(value="/login", headers="Accept=application/json")
 	public ResponseEntity<List<User>> addUser(@RequestBody User user) {
@@ -53,13 +57,14 @@ public class UserController {
     	    
     }
     
-
+    
 	@PutMapping("/updateuser")
 	public ResponseEntity<User> updateUser(@RequestBody User user) {
 		userService.updateUser(user);
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 	
+    
 	@DeleteMapping("/deleteuser/{id}")
 	public ResponseEntity<Void> deleteUser(@PathVariable("id") Integer id) {
 		userService.deleteUser(id);

@@ -21,7 +21,7 @@ import com.app.adha.entity.User;
 import com.app.adha.entity.UserDetails;
 import com.app.adha.service.UserDetailsService;
 
-@CrossOrigin(origins = { "http://159.65.145.220:8080" }, maxAge = 3000)
+@CrossOrigin
 @RestController
 @RequestMapping("/userdetails")
 public class UserDetailsController {

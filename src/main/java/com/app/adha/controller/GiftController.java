@@ -20,7 +20,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.app.adha.entity.Gift;
 import com.app.adha.service.GiftService;
 
-@CrossOrigin(origins = { "http://159.65.145.220:8080" }, maxAge = 3000)
+@CrossOrigin
 @RestController
 @RequestMapping("/gift")
 public class GiftController {

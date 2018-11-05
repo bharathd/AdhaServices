@@ -6,7 +6,7 @@ import com.app.adha.entity.Photo;
 
 public interface PhotoService {
 	
-	List<Photo> getAllPhotos();
+	List<Photo> getAllPhotosByUserId(int userId);
 	Photo getPhotoById(int photoId);
     void addPhoto(Photo photo);
     void deletePhoto(int photoId);

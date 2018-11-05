@@ -19,7 +19,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.app.adha.entity.Scheduler;
 import com.app.adha.service.SchedulerService;
 
-@CrossOrigin(origins = { "http://159.65.145.220:8080" }, maxAge = 3000)
+@CrossOrigin
 @RestController
 @RequestMapping("/scheduler")
 public class SchedulerController {
@@ -42,6 +42,7 @@ public class SchedulerController {
 		List<Scheduler> list = schedulerService.getSchedulersByDate(date);
 		return new ResponseEntity<List<Scheduler>>(list, HttpStatus.OK);
 	}
+    
     
     @GetMapping("schedulers")
 	public ResponseEntity<List<Scheduler>> getAllSchedulers() {
