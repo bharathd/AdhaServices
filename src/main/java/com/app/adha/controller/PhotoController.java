@@ -4,10 +4,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.nio.file.Path;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +19,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,8 +36,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.app.adha.entity.Photo;
+import com.app.adha.exception.FileStorageException;
 import com.app.adha.service.PhotoService;
-import com.app.adha.service.PhotoStorageService;
+
 
 
 @CrossOrigin
@@ -47,11 +51,7 @@ public class PhotoController {
 	@Autowired
 	PhotoService photoService;
 	
-	@Autowired
-    private PhotoStorageService photoStorageService;
 	
-	//Save the uploaded file to this folder
-    private static String UPLOADED_FOLDER = "./photos/";
     
     
     /*@RequestMapping("/up")
@@ -94,17 +94,38 @@ public class PhotoController {
     
     @PostMapping("/uploadPhoto")
     public String uploadPhoto(@RequestParam("file") MultipartFile file) {
-        photoStorageService.storeFile(file);
+    	 /*UPLOADED_FOLDER = "./photos/";
+    	String[] parts = file.getOriginalFilename().split("_");
+    	
+    	Path folder_path = Paths.get(UPLOADED_FOLDER + parts[0]);
+    	UPLOADED_FOLDER = UPLOADED_FOLDER + parts[0] + "/";
+    	if (Files.notExists(folder_path)) {
+    		try {
+				Files.createDirectories(folder_path);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		}
+    	
+    	try {
+    	byte[] bytes = file.getBytes();
+        Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
+        Files.write(path, bytes);
+    	}catch(Exception e) {
+    		e.printStackTrace();
+    	}
         
-        String[] parts = file.getOriginalFilename().split("_");
-       
+        
+        
         Photo photo = new Photo();
         photo.setUserId(Integer.parseInt(parts[0]));
         photo.setUplodedBy(Integer.parseInt(parts[1]));
         photo.setProfilePhoto(Integer.parseInt(parts[2]));
-        photo.setPhotoURL(UPLOADED_FOLDER+file.getOriginalFilename());
-        
-        photoService.addPhoto(photo);
+        photo.setPhotoURL(UPLOADED_FOLDER + file.getOriginalFilename());
+        */
+        photoService.storeFile(file);
+        logger.info("Added photo");
         return "Successfully Uploaded";
     }
 
@@ -114,7 +135,7 @@ public class PhotoController {
                 .stream()
                 .map(file -> uploadPhoto(file))
                 .collect(Collectors.toList());
-         
+        
          return "Successfully Uploaded";
     }
 

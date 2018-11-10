@@ -26,7 +26,6 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> getUserById(@PathVariable("id") int id) {
         System.out.println("Fetching User with id " + id);
