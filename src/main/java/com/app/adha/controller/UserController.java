@@ -3,6 +3,9 @@ package com.app.adha.controller;
 import com.app.adha.exception.ResourceNotFoundException;
 import com.app.adha.entity.User;
 import com.app.adha.service.UserService;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,12 +26,14 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+	
     @Autowired
     UserService userService;
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> getUserById(@PathVariable("id") int id) {
-        System.out.println("Fetching User with id " + id);
+    	logger.info("Fetching User with id " + id);
         User user = userService.getUserById(id);
         if (user == null) {
             return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
@@ -40,6 +45,7 @@ public class UserController {
     @GetMapping("users")
 	public ResponseEntity<List<User>> getAllUsers() {
 		List<User> list = userService.getAllUsers();
+		logger.info("Fetching All Users " + list);
 		return new ResponseEntity<List<User>>(list, HttpStatus.OK);
 	}
     
@@ -48,6 +54,7 @@ public class UserController {
 	public ResponseEntity<List<User>> addUser(@RequestBody User user) {
     	
     	    String message =  userService.addUser(user);
+    	    logger.info("Adding Users " + user);
     	    List<User> user_info = userService.getUserByPhoneNumber(user.getPhoneNumber());
     	    if(message.equals("Account created")) 
     	      return new ResponseEntity<List<User>>(user_info, HttpStatus.CREATED);
@@ -60,6 +67,7 @@ public class UserController {
 	@PutMapping("/updateuser")
 	public ResponseEntity<User> updateUser(@RequestBody User user) {
 		userService.updateUser(user);
+		logger.info("Updating User " + user);
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 	
@@ -67,6 +75,7 @@ public class UserController {
 	@DeleteMapping("/deleteuser/{id}")
 	public ResponseEntity<Void> deleteUser(@PathVariable("id") Integer id) {
 		userService.deleteUser(id);
+		logger.info("Deleting  User " + id);
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}	
 

@@ -3,6 +3,8 @@ package com.app.adha.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -24,13 +26,15 @@ import com.app.adha.service.OtpService;
 @RestController
 @RequestMapping("/otp")
 public class OtpController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(OtpController.class);
 
 	@Autowired
     OtpService otpService;
 	
 	@GetMapping(value = "/{phoneNumber}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Otp>> getOtpById(@PathVariable("phoneNumber") String phoneNumber) {
-        System.out.println("Fetching OTP with id " + phoneNumber);
+		logger.info("Fetching OTP with phoneNumber " + phoneNumber);
         List<Otp> otp = otpService.getOtpByPhoneNumber(phoneNumber);
         if (otp.size() == 0) {
             return new ResponseEntity<List<Otp>>(HttpStatus.NOT_FOUND);
@@ -43,6 +47,7 @@ public class OtpController {
     @PostMapping(value="/genrateotp", headers="Accept=application/json")
 	public ResponseEntity<Void> addOrUpdateOtp(@RequestBody String phoneNumber, UriComponentsBuilder ucBuilder) {
     	       otpService.addOrUpdateOtp(phoneNumber);
+    	       logger.info("Add or Update OTP with phoneNumber " + phoneNumber);
                HttpHeaders headers = new HttpHeaders();
                return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
@@ -50,7 +55,7 @@ public class OtpController {
     @PostMapping(value="/verify", headers="Accept=application/json")
 	public String verifyOTP(@RequestBody Otp otp, UriComponentsBuilder ucBuilder) {
     	    List<Otp> otp_info =  otpService.getOtpByPhoneNumber(otp.getPhoneNumber());
-    	    
+    	    logger.info("OTP Verify " + otp_info);
     	    if(otp_info.size() >= 1) {
     	    	if((otp_info.get(0).getPhoneNumber().equals(otp.getPhoneNumber())) && (otp_info.get(0).getOtpNumber().equals(otp.getOtpNumber()))){
     	    	   return "Success";

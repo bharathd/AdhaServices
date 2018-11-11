@@ -2,6 +2,8 @@ package com.app.adha.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -24,12 +26,14 @@ import com.app.adha.service.SchedulerService;
 @RequestMapping("/scheduler")
 public class SchedulerController {
 	
+	private static final Logger logger = LoggerFactory.getLogger(SchedulerController.class);
+	
 	@Autowired
 	SchedulerService schedulerService;
 	
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Scheduler> getSchedulerById(@PathVariable("id") int id) {
-        System.out.println("Fetching Scheduler with id " + id);
+		logger.info("Fetching Scheduler with id " + id);
         Scheduler scheduler = schedulerService.getSchedulerById(id);
         if (scheduler == null) {
             return new ResponseEntity<Scheduler>(HttpStatus.NOT_FOUND);
@@ -40,6 +44,7 @@ public class SchedulerController {
     @GetMapping("schedulers/{date}")
 	public ResponseEntity<List<Scheduler>> getSchedulersByDate(@PathVariable("date") int date) {
 		List<Scheduler> list = schedulerService.getSchedulersByDate(date);
+		logger.info("Fetching Schedulers with date " + date);
 		return new ResponseEntity<List<Scheduler>>(list, HttpStatus.OK);
 	}
     
@@ -47,14 +52,15 @@ public class SchedulerController {
     @GetMapping("schedulers")
 	public ResponseEntity<List<Scheduler>> getAllSchedulers() {
 		List<Scheduler> list = schedulerService.getAllSchedulers();
+		logger.info("Fetching All Schedulers" + list);
 		return new ResponseEntity<List<Scheduler>>(list, HttpStatus.OK);
 	}
     
     @PostMapping(value="/addscheduler", headers="Accept=application/json")
 	public ResponseEntity<Void> addScheduler(@RequestBody Scheduler scheduler, UriComponentsBuilder ucBuilder) {
-    	       schedulerService.addScheduler(scheduler);;
+    	       schedulerService.addScheduler(scheduler);
+    	       logger.info("Adding Scheduler" + scheduler);
                HttpHeaders headers = new HttpHeaders();
-               headers.setLocation(ucBuilder.path("/scheduler/{id}").buildAndExpand(scheduler.getSchedulerId()).toUri());
                return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
 

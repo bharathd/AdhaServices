@@ -52,37 +52,12 @@ public class PhotoController {
 	PhotoService photoService;
 	
 	
-    
-    
-    /*@RequestMapping("/up")
-	public ModelAndView showUpload() {
-		return new ModelAndView("upload");
-	
-    }
-	*/
-	/*@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Photo> getPhotoById(@PathVariable("id") int id) {
-        System.out.println("Fetching Photo with id " + id);
-        Photo photo = photoService.getPhotoById(id);
-        if (photo == null) {
-            return new ResponseEntity<Photo>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<Photo>(photo, HttpStatus.OK);
-    }*/
-
-	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Photo>> getAllPhotosByUserId(@PathVariable("id") int UserId) {
 		List<Photo> list = photoService.getAllPhotosByUserId(UserId);
 		return new ResponseEntity<List<Photo>>(list, HttpStatus.OK);
 	}
     
-    /*@PostMapping(value="/addphoto", headers="Accept=application/json")
-	public ResponseEntity<Void> addPhoto(@RequestBody Photo photo, UriComponentsBuilder ucBuilder) {
-    	       photoService.addPhoto(photo);
-               HttpHeaders headers = new HttpHeaders();
-               headers.setLocation(ucBuilder.path("/user/{id}").buildAndExpand(photo.getPhotoId()).toUri());
-               return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
-    }*/
     
     @DeleteMapping("/deletephoto/{id}")
 	public ResponseEntity<Void> deletePhoto(@PathVariable("id") Integer id) {
@@ -129,7 +104,7 @@ public class PhotoController {
         return "Successfully Uploaded";
     }
 
-    @PostMapping("/uploadMultiplePhotos")
+    @PostMapping("/uploadPhotos")
     public String uploadMultiplePhotos(@RequestParam("files") MultipartFile[] files) {
          Arrays.asList(files)
                 .stream()

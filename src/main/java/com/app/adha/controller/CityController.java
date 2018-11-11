@@ -2,6 +2,8 @@ package com.app.adha.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -25,12 +27,14 @@ import com.app.adha.service.CityService;
 @RequestMapping("/city")
 public class CityController {
 	
+	private static final Logger logger = LoggerFactory.getLogger(CityController.class);
+	
 	@Autowired
     CityService cityService;
 	
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<City> getCityById(@PathVariable("id") int id) {
-        System.out.println("Fetching City with id " + id);
+		logger.info("Fetching City with id " + id);
         City city = cityService.getCityById(id);
         if (city == null) {
             return new ResponseEntity<City>(HttpStatus.NOT_FOUND);
@@ -41,12 +45,14 @@ public class CityController {
     @GetMapping("citys")
 	public ResponseEntity<List<City>> getAllCitys() {
 		List<City> list = cityService.getAllCitys();
+		logger.info("Fetching All Citys " + list);
 		return new ResponseEntity<List<City>>(list, HttpStatus.OK);
 	}
     
     @PostMapping(value="/addcity", headers="Accept=application/json")
 	public ResponseEntity<Void> addCity(@RequestBody City city, UriComponentsBuilder ucBuilder) {
     	       cityService.addCity(city);
+    	       logger.info("adding city to database " + city);
                HttpHeaders headers = new HttpHeaders();
                headers.setLocation(ucBuilder.path("/user/{id}").buildAndExpand(city.getCityId()).toUri());
                return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
@@ -55,6 +61,7 @@ public class CityController {
     @DeleteMapping("/deletecity/{id}")
 	public ResponseEntity<Void> deleteCity(@PathVariable("id") Integer id) {
     	cityService.deleteCity(id);
+    	logger.info("deleted city from database " + id);
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
 

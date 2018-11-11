@@ -2,6 +2,8 @@ package com.app.adha.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -24,12 +26,14 @@ import com.app.adha.service.NotificationService;
 @RequestMapping("/notification")
 public class NotificationController {
 	
+	private static final Logger logger = LoggerFactory.getLogger(NotificationController.class);
+	
 	@Autowired
 	NotificationService notificationService;
 	
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Notification> getNotificationById(@PathVariable("id") int id) {
-        System.out.println("Fetching Notification with id " + id);
+		logger.info("Fetching Notification with id " + id);
         Notification notification = notificationService.getNotificationById(id);
         if (notification == null) {
             return new ResponseEntity<Notification>(HttpStatus.NOT_FOUND);
@@ -40,12 +44,14 @@ public class NotificationController {
     @GetMapping("notifications")
 	public ResponseEntity<List<Notification>> getAllNotifications() {
 		List<Notification> list = notificationService.getAllNotifications();
+		logger.info("Fetching All Notifications" + list);
 		return new ResponseEntity<List<Notification>>(list, HttpStatus.OK);
 	}
     
     @PostMapping(value="/addnotification", headers="Accept=application/json")
 	public ResponseEntity<Void> addNotification(@RequestBody Notification notification, UriComponentsBuilder ucBuilder) {
-    	      notificationService.addNotification(notification);;
+    	      notificationService.addNotification(notification);
+    	      logger.info("Add Notification" + notification);
                HttpHeaders headers = new HttpHeaders();
                headers.setLocation(ucBuilder.path("/notification/{id}").buildAndExpand(notification.getNotificationId()).toUri());
                return new ResponseEntity<Void>(headers, HttpStatus.CREATED);

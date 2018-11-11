@@ -2,6 +2,8 @@ package com.app.adha.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -25,12 +27,14 @@ import com.app.adha.service.GiftService;
 @RequestMapping("/gift")
 public class GiftController {
 	
+	private static final Logger logger = LoggerFactory.getLogger(GiftController.class);
+	
 	@Autowired
 	GiftService giftService;
 	
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Gift> getGiftById(@PathVariable("id") int id) {
-        System.out.println("Fetching Photo with id " + id);
+		logger.info("Fetching Gift with id " + id);
         Gift gift = giftService.getGiftById(id);
         if (gift == null) {
             return new ResponseEntity<Gift>(HttpStatus.NOT_FOUND);
@@ -41,20 +45,23 @@ public class GiftController {
     @GetMapping("gifts")
 	public ResponseEntity<List<Gift>> getAllGifts() {
 		List<Gift> list = giftService.getAllGifts();
+		logger.info("Fetching all Gifts");
 		return new ResponseEntity<List<Gift>>(list, HttpStatus.OK);
 	}
     
     @PostMapping(value="/addgift", headers="Accept=application/json")
 	public ResponseEntity<Void> addFift(@RequestBody Gift gift, UriComponentsBuilder ucBuilder) {
     	       giftService.addGift(gift);
+    	       logger.info("Adding Git Record to Database");
                HttpHeaders headers = new HttpHeaders();
                headers.setLocation(ucBuilder.path("/user/{id}").buildAndExpand(gift.getGiftId()).toUri());
                return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
     
     @DeleteMapping("/deletegift/{id}")
-	public ResponseEntity<Void> deletePhoto(@PathVariable("id") Integer id) {
+	public ResponseEntity<Void> deleteGift(@PathVariable("id") Integer id) {
     	giftService.deleteGift(id);
+    	logger.info("Delete Gift Record from Database" + id);
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}	
 

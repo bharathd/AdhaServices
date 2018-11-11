@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.adha.dao.UserServiceDAO;
+import com.app.adha.entity.User;
 import com.app.adha.entity.UserService;
 
 @Service
@@ -22,8 +23,8 @@ public class UserServiceServiceImpl implements UserServiceService{
     Date dateobj = new Date();
 	
 	@Override
-	public UserService getServiceById(int schedulerId) {
-		UserService scheduler = serviceDAO.getServiceById(schedulerId);
+	public UserService getServiceById(int serviceId) {
+		UserService scheduler = serviceDAO.getServiceById(serviceId);
 		return scheduler;
 	}	
 	
@@ -36,6 +37,17 @@ public class UserServiceServiceImpl implements UserServiceService{
 	public void addService(UserService service){
 		service.setCreatedDate(df.format(dateobj));
 		serviceDAO.addService(service);
+	}
+	
+	@Override
+	public void updateService(UserService service) {
+		UserService user_service = getServiceById(service.getServiceId());
+		serviceDAO.updateService(user_service);
+	}
+	
+	@Override
+	public void deleteService(int serviceId) {
+		serviceDAO.deleteService(serviceId);
 	}
 
 }
