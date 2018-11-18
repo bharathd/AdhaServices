@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.app.adha.entity.Notification;
+import com.app.adha.util.UtilMethods;
+
 
 @Transactional
 @Repository
@@ -24,9 +26,9 @@ public class NotificationDAOImpl implements NotificationDAO{
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Notification> getAllNotifications() {
-		String hql = "FROM Otp as o ORDER BY o.userId";
-		return (List<Notification>) entityManager.createQuery(hql).getResultList();
+	public List<Notification> getAllNotifications(int userId) {
+		List<Notification> resultList = (List<Notification>) entityManager.createQuery("from Notification where toId = :userId and status = :status").setParameter("userId", userId).setParameter("status", UtilMethods.ACTIVE).getResultList();
+		return resultList;
 	}	
 	
 	@Override

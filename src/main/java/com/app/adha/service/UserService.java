@@ -9,7 +9,7 @@ public interface UserService {
 	List<User> getAllUsers();
     User getUserById(int userId);
     String addUser(User user);
-    void updateUser(User user);
+    User updateUser(User user);
     void deleteUser(int userId);
     int maxRecordId();
 }

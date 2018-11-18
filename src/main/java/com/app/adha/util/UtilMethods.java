@@ -24,14 +24,19 @@ public class UtilMethods {
 	public static int ROLE_SUPERADMIN = 3;
 	
 	//account status constants
-	public static int DEACTIVE = 0;
-	public static int ACTIVE = 1;
-	public static int INPROGRESS = 2;
+	public static int ACCOUNT_DEACTIVE = 0;
+	public static int ACCOUNT_ACTIVE = 1;
+	public static int ACCOUNT_INPROGRESS = 2;
 	
 	//tearms and conditions constants
 	
 	public static int YES = 1;
 	public static int NO = 0;
+	
+	//Active or Delete records in the Database
+	
+	public static int ACTIVE = 1;
+	public static int DELETE = 0;
 	
 	
 	public String sendMail(String to_mail, String otp_number) {

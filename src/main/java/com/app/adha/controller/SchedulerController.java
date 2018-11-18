@@ -10,15 +10,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.app.adha.entity.Scheduler;
+import com.app.adha.entity.UserService;
 import com.app.adha.service.SchedulerService;
 
 @CrossOrigin
@@ -63,5 +66,21 @@ public class SchedulerController {
                HttpHeaders headers = new HttpHeaders();
                return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
+    
+    @PutMapping("/updatescheduler")
+	public ResponseEntity<Scheduler> updateScheduler(@RequestBody Scheduler scheduler) {
+    	Scheduler update_scheduler = schedulerService.updateScheduler(scheduler);;
+		logger.info("Updating Scheduler " + update_scheduler);
+		return new ResponseEntity<Scheduler>(update_scheduler, HttpStatus.OK);
+	}
+	
+    
+	@DeleteMapping("/deletescheduler/{id}")
+	public ResponseEntity<Void> deleteScheduler(@PathVariable("id") Integer schedulerId) {
+		schedulerService.deleteScheduler(schedulerId);
+		logger.info("Deleting  Scheduler " + schedulerId);
+		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+	}
+
 
 }

@@ -27,7 +27,7 @@ public class PhotoServiceImpl implements PhotoService{
 	private PhotoDAO photoDAO;
 	
 	@Autowired
-	private UtilMethods utilMethod;
+    private NotificationService notificationService;
 	
 	//Save the uploaded file to this folder
     private static String UPLOADED_FOLDER = "./photos/";
@@ -92,6 +92,9 @@ public class PhotoServiceImpl implements PhotoService{
         photo.setPhotoURL(UPLOADED_FOLDER + file.getOriginalFilename());
         
         addPhoto(photo);
+        
+        String description = "Admin Added Your Photo in the Adah Services";
+        notificationService.addNotification(photo.getUplodedBy(), photo.getUserId(), description);
         
         return "Sucess";
 	}

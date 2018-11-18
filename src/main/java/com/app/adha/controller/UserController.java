@@ -53,6 +53,9 @@ public class UserController {
     @PostMapping(value="/login", headers="Accept=application/json")
 	public ResponseEntity<List<User>> addUser(@RequestBody User user) {
     	
+    	    if(user.getPhoneNumber().equals("")|| user.getPhoneNumber().equals(null)) {
+    	    	return new ResponseEntity<List<User>>(HttpStatus.BAD_REQUEST);
+    	    }else {
     	    String message =  userService.addUser(user);
     	    logger.info("Adding Users " + user);
     	    List<User> user_info = userService.getUserByPhoneNumber(user.getPhoneNumber());
@@ -60,15 +63,18 @@ public class UserController {
     	      return new ResponseEntity<List<User>>(user_info, HttpStatus.CREATED);
     	    else 
     	      return new ResponseEntity<List<User>>(user_info,HttpStatus.OK);
+    	    }
+    	    	
+    	  
     	    
     }
     
     
 	@PutMapping("/updateuser")
 	public ResponseEntity<User> updateUser(@RequestBody User user) {
-		userService.updateUser(user);
-		logger.info("Updating User " + user);
-		return new ResponseEntity<User>(user, HttpStatus.OK);
+		User update_user = userService.updateUser(user);
+		logger.info("Updating User " + update_user);
+		return new ResponseEntity<User>(update_user, HttpStatus.OK);
 	}
 	
     

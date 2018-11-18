@@ -30,6 +30,8 @@ public class UserService implements Serializable{
 	@Column(name="created_date")
     private String createdDate;
 	
+	@Column(name="status")
+    private int status;
 	
     public int getServiceId() {
 		return serviceId;
@@ -61,6 +63,14 @@ public class UserService implements Serializable{
 
 	public void setCreatedDate(String createdDate) {
 		this.createdDate = createdDate;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 	

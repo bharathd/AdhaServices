@@ -41,19 +41,18 @@ public class NotificationController {
         return new ResponseEntity<Notification>(notification, HttpStatus.OK);
     }
 
-    @GetMapping("notifications")
-	public ResponseEntity<List<Notification>> getAllNotifications() {
-		List<Notification> list = notificationService.getAllNotifications();
+    @GetMapping(value = "/userid/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Notification>> getAllNotifications(@PathVariable("id") int userId) {
+		List<Notification> list = notificationService.getAllNotifications(userId);
 		logger.info("Fetching All Notifications" + list);
 		return new ResponseEntity<List<Notification>>(list, HttpStatus.OK);
 	}
     
     @PostMapping(value="/addnotification", headers="Accept=application/json")
 	public ResponseEntity<Void> addNotification(@RequestBody Notification notification, UriComponentsBuilder ucBuilder) {
-    	      notificationService.addNotification(notification);
+    	      notificationService.addNotification(notification.getFromId(), notification.getToId(), notification.getDescription());
     	      logger.info("Add Notification" + notification);
                HttpHeaders headers = new HttpHeaders();
-               headers.setLocation(ucBuilder.path("/notification/{id}").buildAndExpand(notification.getNotificationId()).toUri());
                return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
 

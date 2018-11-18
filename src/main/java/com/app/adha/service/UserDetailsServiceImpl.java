@@ -18,6 +18,9 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 	@Autowired
 	public UserDetailsDAO userDetailsDAO; 
 	
+	@Autowired
+    private NotificationService notificationService;
+	
 	//getting current date and time using Date class
     DateFormat df = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
     Date dateobj = new Date();
@@ -26,6 +29,9 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 	public void addUserDetails(UserDetails userDetails){
 		userDetails.setUpdatedDate(df.format(dateobj));
 		userDetailsDAO.addUserDetails(userDetails);
+		String description = "Added details successfully";
+        notificationService.addNotification(userDetails.getUserId(), userDetails.getUserId(), description);
+		
 	}
 
 	@Override
@@ -46,8 +52,13 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 		details.setHeight(userDetails.getHeight());
 		details.setMailId(userDetails.getMailId());
 		details.setGender(userDetails.getGender());
+		details.setInstaId(userDetails.getInstaId());
+		details.setInstaFollower(userDetails.getInstaFollower());
 		}
 		
 		userDetailsDAO.updateUserDetails(userDetails);
+		
+		String description = "Updated details successfully";
+        notificationService.addNotification(userDetails.getUserId(), userDetails.getUserId(), description);
 	}
 }

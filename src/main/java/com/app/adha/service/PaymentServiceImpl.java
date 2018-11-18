@@ -17,6 +17,9 @@ public class PaymentServiceImpl implements PaymentService{
 	@Autowired
 	private PaymentDAO paymentDAO;
 	
+	@Autowired
+    private NotificationService notificationService;
+	
 	//getting current date and time using Date class
     DateFormat df = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
     Date dateobj = new Date();
@@ -36,6 +39,8 @@ public class PaymentServiceImpl implements PaymentService{
 	public void addPayment(Payment payment){
 		payment.setPaymentDate(df.format(dateobj));
 		paymentDAO.addPayment(payment);
+		String description = "Customer Made a payment";
+        notificationService.addNotification(payment.getCustomerId(), payment.getCustomerId(), description);
 	}
 
 

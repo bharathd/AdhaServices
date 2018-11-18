@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.app.adha.entity.Photo;
+import com.app.adha.util.UtilMethods;
 
 @Transactional
 @Repository
@@ -37,7 +38,7 @@ public class PhotoDAOImpl implements PhotoDAO{
 	@Override
 	public void deletePhoto(int photoId) {
 		String update_query = "update Photo set status = :status where id = :id";
-		entityManager.createQuery(update_query).setParameter("status", 3).setParameter("id", photoId).executeUpdate();
+		entityManager.createQuery(update_query).setParameter("status", UtilMethods.DELETE).setParameter("id", photoId).executeUpdate();
 	}
 
 }

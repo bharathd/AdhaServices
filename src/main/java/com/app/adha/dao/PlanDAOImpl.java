@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.app.adha.entity.Plan;
+import com.app.adha.util.UtilMethods;
 
 @Transactional
 @Repository
@@ -38,7 +39,7 @@ public class PlanDAOImpl implements PlanDAO{
 	@Override
 	public void deletePlan(int planId) {
 		String update_query = "update Plan set status = :status where id = :id";
-		entityManager.createQuery(update_query).setParameter("status", 2).setParameter("id", planId).executeUpdate();
+		entityManager.createQuery(update_query).setParameter("status", UtilMethods.DELETE).setParameter("id", planId).executeUpdate();
 	}
 
 }

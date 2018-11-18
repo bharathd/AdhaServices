@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.app.adha.entity.User;
 import com.app.adha.entity.UserService;
+import com.app.adha.util.UtilMethods;
 
 @Transactional
 @Repository
@@ -43,6 +44,6 @@ public class UserServiceDAOImpl implements UserServiceDAO{
 	@Override
 	public void deleteService(int serviceId) {
 		String update_query = "update UserService set status = :status where id = :id";
-		entityManager.createQuery(update_query).setParameter("status", 3).setParameter("id", serviceId).executeUpdate();
+		entityManager.createQuery(update_query).setParameter("status", UtilMethods.DELETE).setParameter("id", serviceId).executeUpdate();
 	}
 }

@@ -10,5 +10,7 @@ public interface SchedulerService {
 	List<Scheduler> getSchedulersByDate(int date);
 	Scheduler getSchedulerById(int schedulerId);
     void addScheduler(Scheduler scheduler);
+    Scheduler updateScheduler(Scheduler scheduler);
+    void deleteScheduler(int schedulerId);
 
 }

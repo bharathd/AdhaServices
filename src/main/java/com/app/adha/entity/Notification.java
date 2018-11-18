@@ -21,23 +21,20 @@ public class Notification implements Serializable{
     @Column(name="id")
     private int notificationId;
 	
-	@Column(name="sent_by")
-    private int sentBy;
+	@Column(name="from_id")
+    private int fromId;
 	
-	@Column(name="receiver_id")
-    private int receiverId;
+	@Column(name="to_id")
+    private int toId;
 	
-	@Column(name="type")
-    private int type;
+	@Column(name="description")
+    private String description;
 	
-	@Column(name="message")
-    private String message;
+	@Column(name="created_date")
+    private String createdDate;
 	
-	@Column(name="admin_id")
-    private int adminId;
-	
-	@Column(name="sent_date")
-    private Date sentDate;
+	@Column(name="status")
+    private int status;
 
 	public int getNotificationId() {
 		return notificationId;
@@ -47,54 +44,44 @@ public class Notification implements Serializable{
 		this.notificationId = notificationId;
 	}
 
-	public int getSentBy() {
-		return sentBy;
+	public int getFromId() {
+		return fromId;
 	}
 
-	public void setSentBy(int sentBy) {
-		this.sentBy = sentBy;
+	public void setFromId(int fromId) {
+		this.fromId = fromId;
 	}
 
-	public int getReceiverId() {
-		return receiverId;
+	public int getToId() {
+		return toId;
 	}
 
-	public void setReceiverId(int receiverId) {
-		this.receiverId = receiverId;
+	public void setToId(int toId) {
+		this.toId = toId;
 	}
 
-	public int getType() {
-		return type;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setType(int type) {
-		this.type = type;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public String getMessage() {
-		return message;
+	public String getCreatedDate() {
+		return createdDate;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
+	public void setCreatedDate(String createdDate) {
+		this.createdDate = createdDate;
 	}
 
-	public int getAdminId() {
-		return adminId;
+	public int getStatus() {
+		return status;
 	}
 
-	public void setAdminId(int adminId) {
-		this.adminId = adminId;
+	public void setStatus(int status) {
+		this.status = status;
 	}
-
-	public Date getSentDate() {
-		return sentDate;
-	}
-
-	public void setSentDate(Date sentDate) {
-		this.sentDate = sentDate;
-	}
-	
-	
 
 }

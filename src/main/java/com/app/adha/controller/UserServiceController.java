@@ -61,9 +61,9 @@ public class UserServiceController {
     
     @PutMapping("/updateservice")
 	public ResponseEntity<UserService> updateService(@RequestBody UserService service) {
-    	userServiceService.updateService(service);
-		logger.info("Updating UserService " + service);
-		return new ResponseEntity<UserService>(service, HttpStatus.OK);
+    	UserService update_userService = userServiceService.updateService(service);
+		logger.info("Updating UserService " + update_userService);
+		return new ResponseEntity<UserService>(update_userService, HttpStatus.OK);
 	}
 	
     

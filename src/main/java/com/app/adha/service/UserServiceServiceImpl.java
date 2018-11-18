@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.app.adha.dao.UserServiceDAO;
 import com.app.adha.entity.User;
 import com.app.adha.entity.UserService;
+import com.app.adha.util.UtilMethods;
 
 @Service
 public class UserServiceServiceImpl implements UserServiceService{
@@ -36,13 +37,19 @@ public class UserServiceServiceImpl implements UserServiceService{
 	@Override
 	public void addService(UserService service){
 		service.setCreatedDate(df.format(dateobj));
+		service.setStatus(UtilMethods.ACTIVE);
 		serviceDAO.addService(service);
 	}
 	
 	@Override
-	public void updateService(UserService service) {
+	public UserService updateService(UserService service) {
 		UserService user_service = getServiceById(service.getServiceId());
+		user_service.setCreatedDate(df.format(dateobj));
+		user_service.setCreatedBy(service.getCreatedBy());
+		user_service.setServiceName(service.getServiceName());
+		user_service.setStatus(service.getStatus());
 		serviceDAO.updateService(user_service);
+		return user_service;
 	}
 	
 	@Override

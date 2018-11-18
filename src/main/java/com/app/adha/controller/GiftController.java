@@ -52,9 +52,8 @@ public class GiftController {
     @PostMapping(value="/addgift", headers="Accept=application/json")
 	public ResponseEntity<Void> addFift(@RequestBody Gift gift, UriComponentsBuilder ucBuilder) {
     	       giftService.addGift(gift);
-    	       logger.info("Adding Git Record to Database");
+    	       logger.info("Adding Gift to Database");
                HttpHeaders headers = new HttpHeaders();
-               headers.setLocation(ucBuilder.path("/user/{id}").buildAndExpand(gift.getGiftId()).toUri());
                return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
     

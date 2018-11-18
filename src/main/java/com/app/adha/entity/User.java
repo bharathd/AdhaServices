@@ -36,7 +36,7 @@ public class User implements Serializable{
     private String createdDate;
     
     @Column(name="created_by")
-    private String createdBy;
+    private int createdBy;
     
     @Column(name="user_name")
     private String userName;
@@ -85,11 +85,11 @@ public class User implements Serializable{
 		this.createdDate = createdDate;
 	}
 
-	public String getCreatedBy() {
+	public int getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(String createdBy) {
+	public void setCreatedBy(int createdBy) {
 		this.createdBy = createdBy;
 	}
 

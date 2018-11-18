@@ -47,6 +47,13 @@ public class UserDetails implements Serializable{
 	
 	@Column(name="mail_id")
     private String mailId;
+	
+	@Column(name="insta_id")
+    private String instaId;
+	
+	@Column(name="insta_follower")
+    private String instaFollower;
+	
 
 	public int getUserDetailsId() {
 		return userDetailsId;
@@ -131,4 +138,22 @@ public class UserDetails implements Serializable{
 	public void setMailId(String mailId) {
 		this.mailId = mailId;
 	}
+
+	public String getInstaId() {
+		return instaId;
+	}
+
+	public void setInstaId(String instaId) {
+		this.instaId = instaId;
+	}
+
+	public String getInstaFollower() {
+		return instaFollower;
+	}
+
+	public void setInstaFollower(String instaFollower) {
+		this.instaFollower = instaFollower;
+	}
+	
+	
 }

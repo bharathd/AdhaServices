@@ -6,8 +6,8 @@ import com.app.adha.entity.Notification;
 
 public interface NotificationService {
 	
-	List<Notification> getAllNotifications();
+	List<Notification> getAllNotifications(int userId);
 	Notification getNotificationById(int notificationId);
-    void addNotification(Notification notification);
+    void addNotification(int fromId, int toId, String description);
 
 }

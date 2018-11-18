@@ -51,7 +51,7 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public void deleteUser(int userId) {
 		String update_query = "update User set status = :status where user_id = :user_id";
-		entityManager.createQuery(update_query).setParameter("status", 3).setParameter("user_id", userId).executeUpdate();
+		entityManager.createQuery(update_query).setParameter("status", UtilMethods.ACCOUNT_DEACTIVE).setParameter("user_id", userId).executeUpdate();
 	}
 	
 	@Override

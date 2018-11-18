@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.app.adha.entity.City;
+import com.app.adha.util.UtilMethods;
 
 @Transactional
 @Repository
@@ -37,6 +38,6 @@ public class CityDAOImpl implements CityDAO{
 	@Override
 	public void deleteCity(int cityId) {
 		String update_query = "update City set status = :status where id = :id";
-		entityManager.createQuery(update_query).setParameter("status", 3).setParameter("id", cityId).executeUpdate();
+		entityManager.createQuery(update_query).setParameter("status", UtilMethods.DELETE).setParameter("id", cityId).executeUpdate();
 	}
 }

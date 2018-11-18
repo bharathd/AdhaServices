@@ -44,10 +44,10 @@ public class OtpController {
 
     
     
-    @PostMapping(value="/genrateotp", headers="Accept=application/json")
-	public ResponseEntity<Void> addOrUpdateOtp(@RequestBody String phoneNumber, UriComponentsBuilder ucBuilder) {
-    	       otpService.addOrUpdateOtp(phoneNumber);
-    	       logger.info("Add or Update OTP with phoneNumber " + phoneNumber);
+    @PostMapping(value="/generateotp", headers="Accept=application/json")
+	public ResponseEntity<Void> addOrUpdateOtp(@RequestBody Otp otp, UriComponentsBuilder ucBuilder) {
+    	       otpService.addOrUpdateOtp(otp.getPhoneNumber());
+    	       logger.info("Add or Update OTP with phoneNumber " + otp.getPhoneNumber());
                HttpHeaders headers = new HttpHeaders();
                return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }

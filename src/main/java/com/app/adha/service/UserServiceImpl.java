@@ -22,10 +22,10 @@ public class UserServiceImpl implements UserService{
 	private UserDAO userDAO;
 	
 	@Autowired
-	private UtilMethods utilMethod;
+    private OtpService otpService;
 	
 	@Autowired
-    private OtpService otpService;
+    private NotificationService notificationService;
 	
 	//getting current date and time using Date class
     DateFormat df = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
@@ -57,24 +57,24 @@ public class UserServiceImpl implements UserService{
 			otpService.addOrUpdateOtp(user.getPhoneNumber());
 			return "Account Already exist!";
 		}else {
-		//this is for username field valu
+		//this is for username field value
 		int maxUserId = maxRecordId()+1;
 		
 		if(user.getRole() == UtilMethods.ROLE_MODEL){
 			user.setUserName("MODEL-" + maxUserId);
-			user.setStatus(UtilMethods.INPROGRESS);
+			user.setStatus(UtilMethods.ACCOUNT_INPROGRESS);
 			user.setTerms(UtilMethods.NO);
 		}else if(user.getRole() == UtilMethods.ROLE_CUSTOMER){
 			user.setUserName("CUSTOMER-" + maxUserId);
-			user.setStatus(UtilMethods.ACTIVE);
+			user.setStatus(UtilMethods.ACCOUNT_ACTIVE);
 			user.setTerms(UtilMethods.YES);
 		}else if(user.getRole() == UtilMethods.ROLE_ADMIN) {
 			user.setUserName("ADMIN-" + maxUserId);
-			user.setStatus(UtilMethods.ACTIVE);
+			user.setStatus(UtilMethods.ACCOUNT_ACTIVE);
 			user.setTerms(UtilMethods.YES);
 		}else if(user.getRole() == UtilMethods.ROLE_SUPERADMIN) {
 			user.setUserName("SUPERADMIN-" + maxUserId);
-			user.setStatus(UtilMethods.ACTIVE);
+			user.setStatus(UtilMethods.ACCOUNT_ACTIVE);
 			user.setTerms(UtilMethods.YES);
 		}
 		user.setCreatedDate(df.format(dateobj));
@@ -82,19 +82,30 @@ public class UserServiceImpl implements UserService{
 		
         userDAO.addUser(user);
         otpService.addOrUpdateOtp(user.getPhoneNumber());
+        String description = "Admin added your Account";
+        notificationService.addNotification(user.getCreatedBy(), maxUserId, description);
         return "Account created";
 		}
     }
 	
 	@Override
-	public void updateUser(User user) {
+	public User updateUser(User user) {
 		User usr = getUserById(user.getUserId());
+		usr.setStatus(user.getStatus());
+		usr.setTerms(user.getTerms());
 		userDAO.updateUser(usr);
+		String description = "Upddated your account details";
+        notificationService.addNotification(usr.getCreatedBy(), usr.getUserId(), description);
+
+		return usr;
 	}
 	
 	@Override
 	public void deleteUser(int userId) {
 		userDAO.deleteUser(userId);
+		User usr = getUserById(userId);
+		String description = "Deleted your account";
+        notificationService.addNotification(usr.getCreatedBy(), usr.getUserId(), description);
 	}
 	
 	@Override

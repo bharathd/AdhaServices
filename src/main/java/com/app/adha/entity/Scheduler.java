@@ -40,7 +40,7 @@ public class Scheduler implements Serializable{
     private int serviceId;
 	
 	@Column(name="status")
-    private String status;
+    private int status;
 	
 	@Column(name="message")
     private String message;
@@ -113,11 +113,11 @@ public class Scheduler implements Serializable{
 		this.serviceId = serviceId;
 	}
 
-	public String getStatus() {
+	public int getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 
