@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.app.adha.entity.User;
+
 import com.app.adha.entity.UserService;
+import com.app.adha.entity.ServiceDetails;
 import com.app.adha.service.UserServiceService;
+import com.app.adha.service.ServiceDetailsService;
 
 @CrossOrigin
 @RestController
@@ -34,6 +36,9 @@ public class UserServiceController {
 	@Autowired
 	UserServiceService userServiceService;
 	
+	@Autowired
+	ServiceDetailsService serviceDetailsService;
+	
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserService> getServiceById(@PathVariable("id") int serviceId) {
 		logger.info("Fetching Service with id " + serviceId);
@@ -44,6 +49,13 @@ public class UserServiceController {
         return new ResponseEntity<UserService>(photo, HttpStatus.OK);
     }
 
+    @GetMapping("servicedetails/{userid}")
+	public ResponseEntity<List<ServiceDetails>> getServiceDetailsByUserId(@PathVariable("userid") int userId) {
+		List<ServiceDetails> list = serviceDetailsService.getServiceDetailsByUserId(userId);
+		logger.info("Fetching ServiceDetails by userId " + list);
+		return new ResponseEntity<List<ServiceDetails>>(list, HttpStatus.OK);
+	}
+    
     @GetMapping("services")
 	public ResponseEntity<List<UserService>> getAllServices() {
 		List<UserService> list = userServiceService.getAllServices();
@@ -52,9 +64,17 @@ public class UserServiceController {
 	}
     
     @PostMapping(value="/addservice", headers="Accept=application/json")
-	public ResponseEntity<Void> addPhoto(@RequestBody UserService service, UriComponentsBuilder ucBuilder) {
+	public ResponseEntity<Void> addService(@RequestBody UserService service, UriComponentsBuilder ucBuilder) {
     	       userServiceService.addService(service);
     	       logger.info("Add Service" + service);
+               HttpHeaders headers = new HttpHeaders();
+               return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+    }
+    
+    @PostMapping(value="/addservicedetails", headers="Accept=application/json")
+	public ResponseEntity<Void> addService(@RequestBody ServiceDetails serviceDetails, UriComponentsBuilder ucBuilder) {
+    	       serviceDetailsService.addORUpdateServiceDetails(serviceDetails);
+    	       logger.info("Add ServiceDetails" + serviceDetails);
                HttpHeaders headers = new HttpHeaders();
                return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }

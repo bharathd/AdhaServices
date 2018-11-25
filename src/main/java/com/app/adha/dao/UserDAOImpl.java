@@ -34,7 +34,7 @@ public class UserDAOImpl implements UserDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> getAllUsers() {
-		String hql = "FROM User as u ORDER BY u.userId";
+		String hql = "FROM User as u LEFT JOIN UserDetails as ud on u.userId = ud.userId ORDER BY u.userId";
 		return (List<User>) entityManager.createQuery(hql).getResultList();
 	}	
 	

@@ -1,5 +1,6 @@
 package com.app.adha.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -25,8 +26,13 @@ public class UserDetailsDAOImpl implements UserDetailsDAO{
 	
 	
 	@Override
-	public List<UserDetails> getUserDetailsById(int userId) {
-		return (List<UserDetails>) entityManager.createQuery("from UserDetails where user_id = :user_id ").setParameter("user_id", userId).getResultList();
+	public UserDetails getUserDetailsById(int userId) {
+		UserDetails userdetails =null;
+		List<UserDetails> userdetails_list = (List<UserDetails>)entityManager.createQuery("from UserDetails where user_id = :user_id ").setParameter("user_id", userId).getResultList();
+		if(userdetails_list.size()>0)
+			return userdetails_list.get(0);
+		else
+			return userdetails;
 	}
 	
 	@Override

@@ -8,7 +8,7 @@ import com.app.adha.entity.UserService;
 public interface SchedulerDAO {
 	
 	List<Scheduler> getAllSchedulers();
-	List<Scheduler> getSchedulersByDate(String start_date, String end_date);
+	List<Scheduler> getSchedulersByDate(int userId, String start_date, String end_date);
 	Scheduler getSchedulerById(int schedulerId);
     void addScheduler(Scheduler scheduler);
     void updateScheduler(Scheduler scheduler);

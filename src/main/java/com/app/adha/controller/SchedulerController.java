@@ -44,10 +44,10 @@ public class SchedulerController {
         return new ResponseEntity<Scheduler>(scheduler, HttpStatus.OK);
     }
 
-    @GetMapping("schedulers/{date}")
-	public ResponseEntity<List<Scheduler>> getSchedulersByDate(@PathVariable("date") int date) {
-		List<Scheduler> list = schedulerService.getSchedulersByDate(date);
-		logger.info("Fetching Schedulers with date " + date);
+    @GetMapping("schedulers/{userid}/{date}")
+	public ResponseEntity<List<Scheduler>> getSchedulersByDate(@PathVariable("userid") int userId, @PathVariable("date") int date) {
+		List<Scheduler> list = schedulerService.getSchedulersByDate(userId, date);
+		logger.info("Fetching Schedulers with date " + userId + " " + date);
 		return new ResponseEntity<List<Scheduler>>(list, HttpStatus.OK);
 	}
     

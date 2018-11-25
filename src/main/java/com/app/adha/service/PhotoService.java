@@ -12,5 +12,5 @@ public interface PhotoService {
 	Photo getPhotoById(int photoId);
     void addPhoto(Photo photo);
     void deletePhoto(int photoId);
-    String storeFile(MultipartFile file);
+    String storeFile(MultipartFile file, String newname);
 }

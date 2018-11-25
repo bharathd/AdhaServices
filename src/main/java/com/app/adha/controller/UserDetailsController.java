@@ -34,13 +34,13 @@ public class UserDetailsController {
 	UserDetailsService userDetailsService;
 	
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<UserDetails>> getUserDetailsById(@PathVariable("id") int id) {
+    public ResponseEntity<UserDetails> getUserDetailsById(@PathVariable("id") int id) {
 		logger.info("Fetching UserDetails with id " + id);
-        List<UserDetails> user_details = userDetailsService.getUserDetailsById(id);
+        UserDetails user_details = userDetailsService.getUserDetailsById(id);
         if (user_details == null) {
-            return new ResponseEntity<List<UserDetails>>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<UserDetails>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<List<UserDetails>>(user_details, HttpStatus.OK);
+        return new ResponseEntity<UserDetails>(user_details, HttpStatus.OK);
     }
 	
 	@PostMapping(value="/adduserdetails", headers="Accept=application/json")

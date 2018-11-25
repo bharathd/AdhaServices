@@ -6,6 +6,7 @@ import com.app.adha.entity.UserDetails;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -35,26 +36,25 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 	}
 
 	@Override
-	public List<UserDetails> getUserDetailsById(int userId) {
-		List<UserDetails> obj = userDetailsDAO.getUserDetailsById(userId);
-		return obj;
+	public UserDetails getUserDetailsById(int userId) {
+		return (UserDetails) userDetailsDAO.getUserDetailsById(userId);
 	}
 	
 	@Override
 	public void updateUserDetails(UserDetails userDetails) {
-		List<UserDetails> usr_details = getUserDetailsById(userDetails.getUserId());
-		for(UserDetails details: usr_details) {
-		details.setName(userDetails.getName());
-		details.setUpdatedDate(df.format(dateobj));
-		details.setUpdatedBy(userDetails.getUpdatedBy());
-		details.setCity(userDetails.getCity());
-		details.setGender(userDetails.getGender());
-		details.setHeight(userDetails.getHeight());
-		details.setMailId(userDetails.getMailId());
-		details.setGender(userDetails.getGender());
-		details.setInstaId(userDetails.getInstaId());
-		details.setInstaFollower(userDetails.getInstaFollower());
-		}
+		UserDetails usr_details = getUserDetailsById(userDetails.getUserId());
+		
+		usr_details.setName(userDetails.getName());
+		usr_details.setUpdatedDate(df.format(dateobj));
+		usr_details.setUpdatedBy(userDetails.getUpdatedBy());
+		usr_details.setCity(userDetails.getCity());
+		usr_details.setGender(userDetails.getGender());
+		usr_details.setHeight(userDetails.getHeight());
+		usr_details.setMailId(userDetails.getMailId());
+		usr_details.setLoggedType(userDetails.getLoggedType());
+		usr_details.setInstaId(userDetails.getInstaId());
+		usr_details.setInstaFollower(userDetails.getInstaFollower());
+		
 		
 		userDetailsDAO.updateUserDetails(userDetails);
 		

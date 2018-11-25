@@ -5,9 +5,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -54,8 +57,7 @@ public class UserDetails implements Serializable{
 	@Column(name="insta_follower")
     private String instaFollower;
 	
-
-	public int getUserDetailsId() {
+    public int getUserDetailsId() {
 		return userDetailsId;
 	}
 
@@ -154,6 +156,7 @@ public class UserDetails implements Serializable{
 	public void setInstaFollower(String instaFollower) {
 		this.instaFollower = instaFollower;
 	}
-	
+
+
 	
 }

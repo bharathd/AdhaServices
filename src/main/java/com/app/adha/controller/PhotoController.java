@@ -5,11 +5,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.nio.file.Path;
+import org.springframework.util.StreamUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +36,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.core.io.ClassPathResource;
 
 import com.app.adha.entity.Photo;
 import com.app.adha.exception.FileStorageException;
@@ -58,6 +61,34 @@ public class PhotoController {
 		return new ResponseEntity<List<Photo>>(list, HttpStatus.OK);
 	}
     
+   /* @GetMapping(value = "/{userid}/{photoname}", produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<byte[]> getImage(@PathVariable("userid") int UserId, @PathVariable("photoname") String photoName) throws IOException { 
+    	
+        String photo_location = UserId +"/"+ photoName;
+        ClassPathResource imgFile = new ClassPathResource("photos/"+photo_location);
+        byte[] bytes = StreamUtils.copyToByteArray(imgFile.getInputStream());
+
+        return ResponseEntity
+                .ok()
+                .contentType(MediaType.IMAGE_JPEG)
+                .body(bytes);
+    }*/
+    
+    @GetMapping(value = "/photos/{userid}", produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<byte[]> getImage(@PathVariable("userid") int UserId) throws IOException { 
+    	List<Photo> list = photoService.getAllPhotosByUserId(UserId);
+    	byte[] bytes = new byte[50];
+    	for(Photo photo : list) {
+    		String[] photo_name = photo.getPhotoURL().split("/");
+        String photo_location = UserId +"/"+ photo_name[1];
+        ClassPathResource imgFile = new ClassPathResource("photos/"+photo_location);
+        bytes = StreamUtils.copyToByteArray(imgFile.getInputStream());
+    	}
+        return new ResponseEntity<byte[]>(bytes,HttpStatus.OK);
+               // .ok()
+               // .contentType(MediaType.IMAGE_JPEG)
+               // .body(bytes);
+    }
     
     @DeleteMapping("/deletephoto/{id}")
 	public ResponseEntity<Void> deletePhoto(@PathVariable("id") Integer id) {
@@ -68,47 +99,18 @@ public class PhotoController {
     
     
     @PostMapping("/uploadPhoto")
-    public String uploadPhoto(@RequestParam("file") MultipartFile file) {
-    	 /*UPLOADED_FOLDER = "./photos/";
-    	String[] parts = file.getOriginalFilename().split("_");
+    public String uploadPhoto(@RequestParam("file") MultipartFile file, String newname) {
     	
-    	Path folder_path = Paths.get(UPLOADED_FOLDER + parts[0]);
-    	UPLOADED_FOLDER = UPLOADED_FOLDER + parts[0] + "/";
-    	if (Files.notExists(folder_path)) {
-    		try {
-				Files.createDirectories(folder_path);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-    		}
-    	
-    	try {
-    	byte[] bytes = file.getBytes();
-        Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
-        Files.write(path, bytes);
-    	}catch(Exception e) {
-    		e.printStackTrace();
-    	}
-        
-        
-        
-        Photo photo = new Photo();
-        photo.setUserId(Integer.parseInt(parts[0]));
-        photo.setUplodedBy(Integer.parseInt(parts[1]));
-        photo.setProfilePhoto(Integer.parseInt(parts[2]));
-        photo.setPhotoURL(UPLOADED_FOLDER + file.getOriginalFilename());
-        */
-        photoService.storeFile(file);
+        photoService.storeFile(file, newname);
         logger.info("Added photo");
         return "Successfully Uploaded";
     }
 
     @PostMapping("/uploadPhotos")
-    public String uploadMultiplePhotos(@RequestParam("files") MultipartFile[] files) {
+    public String uploadMultiplePhotos(@RequestParam("files") MultipartFile[] files, @RequestParam("newname") String newname) {
          Arrays.asList(files)
                 .stream()
-                .map(file -> uploadPhoto(file))
+                .map(file -> uploadPhoto(file, newname))
                 .collect(Collectors.toList());
         
          return "Successfully Uploaded";

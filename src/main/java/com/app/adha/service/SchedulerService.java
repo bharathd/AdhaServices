@@ -7,7 +7,7 @@ import com.app.adha.entity.Scheduler;
 public interface SchedulerService {
 	
 	List<Scheduler> getAllSchedulers();
-	List<Scheduler> getSchedulersByDate(int date);
+	List<Scheduler> getSchedulersByDate(int userId, int date);
 	Scheduler getSchedulerById(int schedulerId);
     void addScheduler(Scheduler scheduler);
     Scheduler updateScheduler(Scheduler scheduler);

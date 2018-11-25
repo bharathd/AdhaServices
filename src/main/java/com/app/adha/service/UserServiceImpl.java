@@ -7,11 +7,15 @@ import org.springframework.stereotype.Service;
 
 import com.app.adha.service.OtpService;
 import com.app.adha.dao.UserDAO;
+import com.app.adha.dao.UserDetailsDAO;
 import com.app.adha.entity.Otp;
+import com.app.adha.entity.ServiceDetails;
 import com.app.adha.entity.User;
+import com.app.adha.entity.UserDetails;
 import com.app.adha.util.UtilMethods;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.text.DateFormat;
 
@@ -22,10 +26,22 @@ public class UserServiceImpl implements UserService{
 	private UserDAO userDAO;
 	
 	@Autowired
+	private UserDetailsDAO userDetailsDAO;
+	
+	@Autowired
     private OtpService otpService;
 	
 	@Autowired
     private NotificationService notificationService;
+	
+	@Autowired
+	ServiceDetailsService serviceDetailsService;
+	
+	@Autowired
+	UserServiceService userServiceService;
+	
+	@Autowired
+	UserDetailsService userDetailsService;
 	
 	//getting current date and time using Date class
     DateFormat df = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
@@ -40,6 +56,7 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public User getUserById(int userId) {
 		User obj = userDAO.getUserById(userId);
+		obj.setUserDetails(userDetailsService.getUserDetailsById(userId));
 		return obj;
 	}	
 	
@@ -50,7 +67,7 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public String addUser(User user){
-		
+		StringBuffer service_details= new StringBuffer();
 		List<User> list_user = userDAO.getUserByPhoneNumber(user.getPhoneNumber());
 		
 		if(list_user.size()>0) {
@@ -68,15 +85,16 @@ public class UserServiceImpl implements UserService{
 			user.setUserName("CUSTOMER-" + maxUserId);
 			user.setStatus(UtilMethods.ACCOUNT_ACTIVE);
 			user.setTerms(UtilMethods.YES);
-		}else if(user.getRole() == UtilMethods.ROLE_ADMIN) {
+		}else if(user.getRole() == UtilMethods.ROLE_ADMIN && user.getCreatedBy()>0) {
 			user.setUserName("ADMIN-" + maxUserId);
 			user.setStatus(UtilMethods.ACCOUNT_ACTIVE);
 			user.setTerms(UtilMethods.YES);
-		}else if(user.getRole() == UtilMethods.ROLE_SUPERADMIN) {
+		}else if(user.getRole() == UtilMethods.ROLE_SUPERADMIN && user.getCreatedBy()>0) {
 			user.setUserName("SUPERADMIN-" + maxUserId);
 			user.setStatus(UtilMethods.ACCOUNT_ACTIVE);
 			user.setTerms(UtilMethods.YES);
 		}
+		if((user.getRole() == UtilMethods.ROLE_MODEL) || (user.getRole() == UtilMethods.ROLE_CUSTOMER) || (user.getRole() == UtilMethods.ROLE_ADMIN && user.getCreatedBy()>0) || (user.getRole() == UtilMethods.ROLE_SUPERADMIN && user.getCreatedBy()>0)) {
 		user.setCreatedDate(df.format(dateobj));
 		
 		
@@ -84,7 +102,18 @@ public class UserServiceImpl implements UserService{
         otpService.addOrUpdateOtp(user.getPhoneNumber());
         String description = "Admin added your Account";
         notificationService.addNotification(user.getCreatedBy(), maxUserId, description);
+        
+        List<com.app.adha.entity.UserService> list_userservices = userServiceService.getAllServices();
+        for(com.app.adha.entity.UserService userService : list_userservices) {
+        	service_details.append(userService.getServiceName()+"-"+UtilMethods.YES+",");
+        }
+        ServiceDetails serviceDetails = new ServiceDetails();
+        serviceDetails.setUserId(user.getUserId());
+        serviceDetails.setServices(service_details.toString());
+        serviceDetailsService.addORUpdateServiceDetails(serviceDetails);
         return "Account created";
+		}
+		return "Please Contact SuperAdmin";
 		}
     }
 	

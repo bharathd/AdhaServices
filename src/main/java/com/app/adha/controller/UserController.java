@@ -61,6 +61,8 @@ public class UserController {
     	    List<User> user_info = userService.getUserByPhoneNumber(user.getPhoneNumber());
     	    if(message.equals("Account created")) 
     	      return new ResponseEntity<List<User>>(user_info, HttpStatus.CREATED);
+    	    else if(message.equals("Please Contact SuperAdmin"))
+    	    	return new ResponseEntity<List<User>>(user_info, HttpStatus.FORBIDDEN);
     	    else 
     	      return new ResponseEntity<List<User>>(user_info,HttpStatus.OK);
     	    }

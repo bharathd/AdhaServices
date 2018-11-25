@@ -39,7 +39,7 @@ public class SchedulerServiceImpl implements SchedulerService{
 	}
 	
 	@Override
-	public List<Scheduler> getSchedulersByDate(int date){
+	public List<Scheduler> getSchedulersByDate(int userId, int date){
 		String start_date =df.format(dateobj);
 		String end_date = df.format(dateobj);
 		Calendar cal = Calendar.getInstance();
@@ -60,7 +60,7 @@ public class SchedulerServiceImpl implements SchedulerService{
 	               end_date = df.format(cal.getTime());
 				}else if(date == 0) {
 					cal.setTime(df.parse(start_date));
-			        cal.add(Calendar.DATE, 1); 
+			        cal.add(Calendar.DATE, 0); 
 			        cal.set(Calendar.HOUR_OF_DAY, 0); 
 			        cal.set(Calendar.MINUTE, 0);
 			        cal.set(Calendar.SECOND, 0); 
@@ -89,7 +89,7 @@ public class SchedulerServiceImpl implements SchedulerService{
 				e.printStackTrace();
 			}
 		
-		return schedulerDAO.getSchedulersByDate(start_date, end_date);
+		return schedulerDAO.getSchedulersByDate(userId, start_date, end_date);
 	}
 	
 	
@@ -105,7 +105,7 @@ public class SchedulerServiceImpl implements SchedulerService{
 
 	@Override
 	public Scheduler updateScheduler(Scheduler scheduler) {
-		Scheduler user_scheduler = getSchedulerById(scheduler.getServiceId());
+		Scheduler user_scheduler = getSchedulerById(scheduler.getSchedulerId());
 		user_scheduler.setAdminId(scheduler.getAdminId());
 		user_scheduler.setCreatedBy(scheduler.getCreatedBy());
 		user_scheduler.setModelId(scheduler.getModelId());

@@ -26,8 +26,8 @@ public class PhotoDAOImpl implements PhotoDAO{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Photo> getAllPhotosByUserId(int userId) {
-		String hql = "FROM Photo as p ORDER BY p.userId";
-		return (List<Photo>) entityManager.createQuery(hql).getResultList();
+		String hql = "FROM Photo as p where p.userId = :id";
+		return (List<Photo>) entityManager.createQuery(hql).setParameter("id", userId).getResultList();
 	}	
 	
 	@Override

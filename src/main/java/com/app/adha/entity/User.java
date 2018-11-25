@@ -43,7 +43,9 @@ public class User implements Serializable{
     
     @Column(name="terms_conditions")
     private int terms;
-
+    
+    private UserDetails userDetails;
+    
 	public int getUserId() {
 		return userId;
 	}
@@ -107,6 +109,15 @@ public class User implements Serializable{
 
 	public void setTerms(int terms) {
 		this.terms = terms;
+	}
+
+	
+	public UserDetails getUserDetails() {
+		return userDetails;
+	}
+
+	public void setUserDetails(UserDetails userDetails) {
+		this.userDetails = userDetails;
 	}
 
 	

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.app.adha.entity.User;
 
-public interface UserDAO {
+public interface UserDAO{
 	List<User> getUserByPhoneNumber(String phoneNumber);
 	List<User> getAllUsers();
     User getUserById(int userId);
