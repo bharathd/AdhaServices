@@ -49,6 +49,12 @@ public class UserController {
 		return new ResponseEntity<List<User>>(list, HttpStatus.OK);
 	}
     
+    @GetMapping("users/{userRoll}")
+	public ResponseEntity<List<User>> getAllUsersByUserRole(@PathVariable("userRoll") int userRole) {
+		List<User> list = userService.getAllUsersByUserRole(userRole);
+		logger.info("Fetching All Users " + list);
+		return new ResponseEntity<List<User>>(list, HttpStatus.OK);
+	}
     
     @PostMapping(value="/login", headers="Accept=application/json")
 	public ResponseEntity<List<User>> addUser(@RequestBody User user) {

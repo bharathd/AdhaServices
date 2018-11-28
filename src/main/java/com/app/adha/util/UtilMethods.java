@@ -38,6 +38,12 @@ public class UtilMethods {
 	public static int ACTIVE = 1;
 	public static int DELETE = 0;
 	
+	//aws keys
+	public static String  myAccessKey = "Y4KRK4AYYOYHAW7UQRY6";
+	public static String  mySecretKey = "aiKueks4GqlPFcVEbVQvqsntGj3RcDYv+nJXqWVkUtU";
+	public static String bucketName = "adahappsql";
+	public static String region = "sfo2";
+	public static String endpoint = "https://sfo2.digitaloceanspaces.com";
 	
 	public String sendMail(String to_mail, String otp_number) {
         MimeMessage message = sender.createMimeMessage();

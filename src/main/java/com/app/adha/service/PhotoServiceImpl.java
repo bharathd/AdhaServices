@@ -1,5 +1,6 @@
 package com.app.adha.service;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -19,6 +20,13 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import java.net.MalformedURLException;
 
+import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.app.adha.dao.PhotoDAO;
 import com.app.adha.entity.Photo;
 import com.app.adha.util.UtilMethods;
@@ -93,7 +101,7 @@ public class PhotoServiceImpl implements PhotoService{
     	
     	
     	
-    	if (Files.notExists(userid_path)) {
+    	/*if (Files.notExists(userid_path)) {
     		try {
 				Files.createDirectories(userid_path);
 			} catch (IOException e) {
@@ -108,10 +116,19 @@ public class PhotoServiceImpl implements PhotoService{
         Files.write(path, bytes);
     	}catch(Exception e) {
     		e.printStackTrace();
-    	}
+    	}*/
         
         
-        
+      AWSCredentialsProvider  awsCreds = new AWSStaticCredentialsProvider(new BasicAWSCredentials(UtilMethods.myAccessKey, UtilMethods.mySecretKey));
+      AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
+                .withCredentials(awsCreds)
+                .withEndpointConfiguration(new EndpointConfiguration(UtilMethods.endpoint, UtilMethods.region))
+                .build();
+      String filepath = file.getOriginalFilename();
+      File s3_file = new File(filepath);
+      PutObjectRequest por = new PutObjectRequest("adahappsql","test-Anil", s3_file);
+      s3Client.putObject(por);
+      
         Photo photo = new Photo();
         photo.setUserId(Integer.parseInt(parts[0]));
         photo.setUplodedBy(Integer.parseInt(parts[1]));
@@ -123,6 +140,6 @@ public class PhotoServiceImpl implements PhotoService{
         String description = "Admin Added Your Photo in the Adah Services";
         notificationService.addNotification(photo.getUplodedBy(), photo.getUserId(), description);
         
-        return "Sucess";
+        return "Success";
 	}
 }

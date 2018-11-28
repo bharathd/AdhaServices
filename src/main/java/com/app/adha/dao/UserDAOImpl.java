@@ -38,6 +38,13 @@ public class UserDAOImpl implements UserDAO {
 		return (List<User>) entityManager.createQuery(hql).getResultList();
 	}	
 	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> getAllUsersByUserRole(int userRole) {
+		String hql = "FROM User as u LEFT JOIN UserDetails as ud on u.userId = ud.userId where role = :role ORDER BY u.userId";
+		return (List<User>) entityManager.createQuery(hql).setParameter("role", userRole).getResultList();
+	}
+	
 	@Override
 	public void addUser(User user) {
 		entityManager.persist(user);

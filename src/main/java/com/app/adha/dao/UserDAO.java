@@ -7,6 +7,7 @@ import com.app.adha.entity.User;
 public interface UserDAO{
 	List<User> getUserByPhoneNumber(String phoneNumber);
 	List<User> getAllUsers();
+	List<User> getAllUsersByUserRole(int userRole);
     User getUserById(int userId);
     void addUser(User user);
     void updateUser(User user);

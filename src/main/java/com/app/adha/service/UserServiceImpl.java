@@ -66,6 +66,11 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	@Override
+	public List<User> getAllUsersByUserRole(int userRole){
+		return userDAO.getAllUsersByUserRole(userRole);
+	}
+	
+	@Override
 	public String addUser(User user){
 		StringBuffer service_details= new StringBuffer();
 		List<User> list_user = userDAO.getUserByPhoneNumber(user.getPhoneNumber());

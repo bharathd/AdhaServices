@@ -7,6 +7,7 @@ public interface UserService {
 	
 	List<User> getUserByPhoneNumber(String phoneNumber);
 	List<User> getAllUsers();
+	List<User> getAllUsersByUserRole(int userRole);
     User getUserById(int userId);
     String addUser(User user);
     User updateUser(User user);
