@@ -22,7 +22,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.app.adha.entity.Plan;
 import com.app.adha.service.PlanService;
 
-@CrossOrigin
+//@CrossOrigin
 @RestController
 @RequestMapping("/plan")
 public class PlanController {

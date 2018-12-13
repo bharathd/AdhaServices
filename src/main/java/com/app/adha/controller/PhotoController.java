@@ -45,7 +45,7 @@ import com.app.adha.service.PhotoService;
 
 
 
-@CrossOrigin
+//@CrossOrigin
 @RestController
 @RequestMapping("/photo")
 public class PhotoController {

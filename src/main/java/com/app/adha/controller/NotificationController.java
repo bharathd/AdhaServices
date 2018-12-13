@@ -22,7 +22,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.app.adha.entity.Notification;
 import com.app.adha.service.NotificationService;
 
-@CrossOrigin
+//@CrossOrigin
 @RestController
 @RequestMapping("/notification")
 public class NotificationController {

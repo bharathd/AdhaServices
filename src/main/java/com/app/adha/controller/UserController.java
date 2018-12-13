@@ -21,7 +21,7 @@ import java.util.List;
  * Created by Anil on 03/10/18.
  */
 
-@CrossOrigin(origins = "*", maxAge = 4800, allowCredentials = "false", allowedHeaders = "*")
+//@CrossOrigin(origins = "*", maxAge = 4800, allowCredentials = "false", allowedHeaders = "*")
 @RestController
 @RequestMapping("/user")
 public class UserController {

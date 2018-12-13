@@ -21,7 +21,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.app.adha.entity.Payment;
 import com.app.adha.service.PaymentService;
 
-@CrossOrigin
+//@CrossOrigin
 @RestController
 @RequestMapping("/payment")
 public class PaymentController {

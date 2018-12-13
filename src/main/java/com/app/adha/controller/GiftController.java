@@ -24,7 +24,7 @@ import com.app.adha.entity.Gift;
 import com.app.adha.entity.UserService;
 import com.app.adha.service.GiftService;
 
-@CrossOrigin
+//@CrossOrigin
 @RestController
 @RequestMapping("/gift")
 public class GiftController {

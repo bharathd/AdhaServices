@@ -27,7 +27,7 @@ import com.app.adha.entity.ServiceDetails;
 import com.app.adha.service.UserServiceService;
 import com.app.adha.service.ServiceDetailsService;
 
-@CrossOrigin
+//@CrossOrigin
 @RestController
 @RequestMapping("/service")
 public class UserServiceController {

@@ -23,7 +23,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.app.adha.entity.UserDetails;
 import com.app.adha.service.UserDetailsService;
 
-@CrossOrigin
+//@CrossOrigin
 @RestController
 @RequestMapping("/userdetails")
 public class UserDetailsController {

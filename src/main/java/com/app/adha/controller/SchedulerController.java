@@ -24,7 +24,7 @@ import com.app.adha.entity.Scheduler;
 import com.app.adha.entity.UserService;
 import com.app.adha.service.SchedulerService;
 
-@CrossOrigin
+//@CrossOrigin
 @RestController
 @RequestMapping("/scheduler")
 public class SchedulerController {

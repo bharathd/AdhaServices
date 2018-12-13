@@ -22,7 +22,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.app.adha.entity.City;
 import com.app.adha.service.CityService;
 
-@CrossOrigin
+//@CrossOrigin
 @RestController
 @RequestMapping("/city")
 public class CityController {

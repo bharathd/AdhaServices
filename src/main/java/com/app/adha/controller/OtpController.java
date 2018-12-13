@@ -22,7 +22,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.app.adha.entity.Otp;
 import com.app.adha.service.OtpService;
 
-@CrossOrigin
+//@CrossOrigin
 @RestController
 @RequestMapping("/otp")
 public class OtpController {
