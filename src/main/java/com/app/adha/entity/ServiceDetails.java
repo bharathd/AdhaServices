@@ -28,6 +28,12 @@ public class ServiceDetails implements Serializable{
     
     @Column(name="created_date")
     private String createdDate;
+    
+    @Column(name="schedule_services")
+	private String scheduleServices;
+    
+    @Column(name="schedule_date")
+    private String scheduleDate;
 
 	public int getServiceDetailsId() {
 		return serviceDetailsId;
@@ -59,6 +65,22 @@ public class ServiceDetails implements Serializable{
 
 	public void setCreatedDate(String createdDate) {
 		this.createdDate = createdDate;
+	}
+
+	public String getScheduleServices() {
+		return scheduleServices;
+	}
+
+	public void setScheduleServices(String scheduleServices) {
+		this.scheduleServices = scheduleServices;
+	}
+
+	public String getScheduleDate() {
+		return scheduleDate;
+	}
+
+	public void setScheduleDate(String scheduleDate) {
+		this.scheduleDate = scheduleDate;
 	}
     
     

@@ -52,6 +52,13 @@ public class SchedulerController {
 	}
     
     
+    @GetMapping("schedulers/{userid}")
+	public ResponseEntity<List<Scheduler>> getAllSchedulersByUserId(@PathVariable("userid") int userId) {
+		List<Scheduler> list = schedulerService.getAllSchedulersByUserId(userId);
+		logger.info("Fetching All Schedulers" + list);
+		return new ResponseEntity<List<Scheduler>>(list, HttpStatus.OK);
+	}
+    
     @GetMapping("schedulers")
 	public ResponseEntity<List<Scheduler>> getAllSchedulers() {
 		List<Scheduler> list = schedulerService.getAllSchedulers();

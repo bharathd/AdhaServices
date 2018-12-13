@@ -9,5 +9,5 @@ public interface NotificationService {
 	List<Notification> getAllNotifications(int userId);
 	Notification getNotificationById(int notificationId);
     void addNotification(int fromId, int toId, String description);
-
+    void updateNotificationStatus(int notificationId);
 }

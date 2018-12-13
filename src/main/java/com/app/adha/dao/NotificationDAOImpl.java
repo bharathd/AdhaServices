@@ -35,5 +35,11 @@ public class NotificationDAOImpl implements NotificationDAO{
 	public void addNotification(Notification notification) {
 		entityManager.persist(notification);
 	}
+	
+	@Override
+	public void updateNotificationStatus(int notificationId) {
+		String update_query = "update Notification set status = :status where id = :id";
+		entityManager.createQuery(update_query).setParameter("status", UtilMethods.NO).setParameter("id", notificationId).executeUpdate();
+	}
 
 }

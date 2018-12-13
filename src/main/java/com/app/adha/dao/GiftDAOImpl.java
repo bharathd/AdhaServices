@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.app.adha.entity.Gift;
+import com.app.adha.entity.UserService;
 import com.app.adha.util.UtilMethods;
 
 @Transactional
@@ -33,6 +34,11 @@ public class GiftDAOImpl implements GiftDAO{
 	@Override
 	public void addGift(Gift gift) {
 		entityManager.persist(gift);
+	}
+	
+	@Override
+	public void updateGift(Gift gift) {
+	   entityManager.flush();
 	}
 	
 	@Override

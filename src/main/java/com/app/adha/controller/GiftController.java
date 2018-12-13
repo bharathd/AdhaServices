@@ -14,12 +14,14 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.app.adha.entity.Gift;
+import com.app.adha.entity.UserService;
 import com.app.adha.service.GiftService;
 
 @CrossOrigin
@@ -50,12 +52,19 @@ public class GiftController {
 	}
     
     @PostMapping(value="/addgift", headers="Accept=application/json")
-	public ResponseEntity<Void> addFift(@RequestBody Gift gift, UriComponentsBuilder ucBuilder) {
+	public ResponseEntity<Void> addGift(@RequestBody Gift gift, UriComponentsBuilder ucBuilder) {
     	       giftService.addGift(gift);
     	       logger.info("Adding Gift to Database");
                HttpHeaders headers = new HttpHeaders();
                return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
+    
+    @PutMapping("/updategift")
+	public ResponseEntity<Gift> updateGift(@RequestBody Gift gift) {
+    	Gift gift_details= giftService.updateGift(gift);
+		logger.info("Updating Gift " + gift_details);
+		return new ResponseEntity<Gift>(gift_details, HttpStatus.OK);
+	}
     
     @DeleteMapping("/deletegift/{id}")
 	public ResponseEntity<Void> deleteGift(@PathVariable("id") Integer id) {

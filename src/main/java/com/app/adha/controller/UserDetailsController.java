@@ -38,7 +38,7 @@ public class UserDetailsController {
 		logger.info("Fetching UserDetails with id " + id);
         UserDetails user_details = userDetailsService.getUserDetailsById(id);
         if (user_details == null) {
-            return new ResponseEntity<UserDetails>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<UserDetails>(user_details,HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<UserDetails>(user_details, HttpStatus.OK);
     }

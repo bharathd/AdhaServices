@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -52,6 +53,14 @@ public class NotificationController {
 	public ResponseEntity<Void> addNotification(@RequestBody Notification notification, UriComponentsBuilder ucBuilder) {
     	      notificationService.addNotification(notification.getFromId(), notification.getToId(), notification.getDescription());
     	      logger.info("Add Notification" + notification);
+               HttpHeaders headers = new HttpHeaders();
+               return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+    }
+    
+    @PutMapping(value="/updatenotification/{id}")
+	public ResponseEntity<Void> updateNotification(@PathVariable("id") Integer notificationId) {
+    	      notificationService.updateNotificationStatus(notificationId);
+    	      logger.info("Update Notification" + notificationId);
                HttpHeaders headers = new HttpHeaders();
                return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }

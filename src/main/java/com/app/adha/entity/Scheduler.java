@@ -39,6 +39,9 @@ public class Scheduler implements Serializable{
 	@Column(name="service_id")
     private int serviceId;
 	
+	@Column(name="gift_id")
+    private int giftId;
+	
 	@Column(name="status")
     private int status;
 	
@@ -160,6 +163,15 @@ public class Scheduler implements Serializable{
 	public void setUpdatedDate(String updatedDate) {
 		this.updatedDate = updatedDate;
 	}
+
+	public int getGiftId() {
+		return giftId;
+	}
+
+	public void setGiftId(int giftId) {
+		this.giftId = giftId;
+	}
+	
 	
 	
 }

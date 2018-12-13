@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -61,33 +62,11 @@ public class PhotoController {
 		return new ResponseEntity<List<Photo>>(list, HttpStatus.OK);
 	}
     
-   /* @GetMapping(value = "/{userid}/{photoname}", produces = MediaType.IMAGE_JPEG_VALUE)
-    public ResponseEntity<byte[]> getImage(@PathVariable("userid") int UserId, @PathVariable("photoname") String photoName) throws IOException { 
-    	
-        String photo_location = UserId +"/"+ photoName;
-        ClassPathResource imgFile = new ClassPathResource("photos/"+photo_location);
-        byte[] bytes = StreamUtils.copyToByteArray(imgFile.getInputStream());
-
-        return ResponseEntity
-                .ok()
-                .contentType(MediaType.IMAGE_JPEG)
-                .body(bytes);
-    }*/
-    
-    @GetMapping(value = "/photos/{userid}", produces = MediaType.IMAGE_JPEG_VALUE)
-    public ResponseEntity<byte[]> getImage(@PathVariable("userid") int UserId) throws IOException { 
-    	List<Photo> list = photoService.getAllPhotosByUserId(UserId);
-    	byte[] bytes = new byte[50];
-    	for(Photo photo : list) {
-    		String[] photo_name = photo.getPhotoURL().split("/");
-        String photo_location = UserId +"/"+ photo_name[1];
-        ClassPathResource imgFile = new ClassPathResource("photos/"+photo_location);
-        bytes = StreamUtils.copyToByteArray(imgFile.getInputStream());
-    	}
-        return new ResponseEntity<byte[]>(bytes,HttpStatus.OK);
-               // .ok()
-               // .contentType(MediaType.IMAGE_JPEG)
-               // .body(bytes);
+   
+    @GetMapping(value = "/photos", produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<byte[]> getImage(@RequestParam("photo_url") String photoURL) throws IOException {
+    	byte[] phots_name = photoService.getPhotosByUserId(photoURL);
+    	return new ResponseEntity<byte[]>(phots_name,HttpStatus.OK);
     }
     
     @DeleteMapping("/deletephoto/{id}")
@@ -100,8 +79,7 @@ public class PhotoController {
     
     @PostMapping("/uploadPhoto")
     public String uploadPhoto(@RequestParam("file") MultipartFile file, String newname) {
-    	
-        photoService.storeFile(file, newname);
+    	photoService.storeFile(file, newname);
         logger.info("Added photo");
         return "Successfully Uploaded";
     }

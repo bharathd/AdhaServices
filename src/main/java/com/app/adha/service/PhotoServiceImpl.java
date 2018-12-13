@@ -10,7 +10,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,9 +43,8 @@ public class PhotoServiceImpl implements PhotoService{
 	@Autowired
     private NotificationService notificationService;
 	
-	//Save the uploaded file to this folder
-   // private static String UPLOADED_FOLDER = "./photos/";
-    private final Path UPLOADED_FOLDER = Paths.get("src/main/resources/photos");
+	@Autowired
+	private S3BucketUpload s3BucketUpload;
 	
 	//getting current date and time using Date class
     DateFormat df = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
@@ -60,6 +61,13 @@ public class PhotoServiceImpl implements PhotoService{
 		return photoDAO.getAllPhotosByUserId(userId);
 	}
 	
+	
+	@Override
+	public byte[] getPhotosByUserId(String photo_url){
+		byte[] bytes = s3BucketUpload.downloadFile(photo_url);
+		return bytes;
+	}
+	
 	@Override
 	public void addPhoto(Photo photo){
 		photo.setUplodedDate(df.format(dateobj));
@@ -67,25 +75,7 @@ public class PhotoServiceImpl implements PhotoService{
 		photoDAO.addPhoto(photo);
 	}
 	
-	public List<Resource> loadFile(int userId) {
-		List<Resource>  array_resource = new ArrayList<Resource>();
-		Path userid_path = Paths.get(UPLOADED_FOLDER + "/" + userId);
-		List<Photo>  photos= photoDAO.getAllPhotosByUserId(userId);
-		for( Photo user_photo:photos) {
-		try {
-			Path file = userid_path.resolve(user_photo.getPhotoURL());
-			Resource resource = new UrlResource(file.toUri());
-			if (resource.exists() || resource.isReadable()) {
-				array_resource.add(resource);
-			} else {
-				throw new RuntimeException("FAIL!");
-			}
-		} catch (MalformedURLException e) {
-			throw new RuntimeException("FAIL!");
-		}
-		}
-		return array_resource;
-	}
+	
 	
 	@Override
 	public void deletePhoto(int photoId) {
@@ -96,44 +86,26 @@ public class PhotoServiceImpl implements PhotoService{
 	public String storeFile(MultipartFile file, String newname) {
 		
     	String[] parts = newname.split("_");
-    	
-    	Path userid_path = Paths.get(UPLOADED_FOLDER + "/" + parts[0]);
-    	
-    	
-    	
-    	/*if (Files.notExists(userid_path)) {
-    		try {
-				Files.createDirectories(userid_path);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-    		}
-    	 
+    	String bucketName = "photos" + "/" + parts[0] + "/";
     	try {
-    	byte[] bytes = file.getBytes();
-        Path path = Paths.get(userid_path + "/" + file.getOriginalFilename());
-        Files.write(path, bytes);
-    	}catch(Exception e) {
+    	s3BucketUpload.upload(file, bucketName);
+    	}
+    	catch(IOException e) {
     		e.printStackTrace();
-    	}*/
-        
-        
-      AWSCredentialsProvider  awsCreds = new AWSStaticCredentialsProvider(new BasicAWSCredentials(UtilMethods.myAccessKey, UtilMethods.mySecretKey));
-      AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
-                .withCredentials(awsCreds)
-                .withEndpointConfiguration(new EndpointConfiguration(UtilMethods.endpoint, UtilMethods.region))
-                .build();
-      String filepath = file.getOriginalFilename();
-      File s3_file = new File(filepath);
-      PutObjectRequest por = new PutObjectRequest("adahappsql","test-Anil", s3_file);
-      s3Client.putObject(por);
-      
+    		 
+    	}
         Photo photo = new Photo();
         photo.setUserId(Integer.parseInt(parts[0]));
         photo.setUplodedBy(Integer.parseInt(parts[1]));
         photo.setProfilePhoto(Integer.parseInt(parts[2]));
-        photo.setPhotoURL(userid_path + "/" + file.getOriginalFilename());
+        photo.setPhotoURL(bucketName + file.getOriginalFilename());
+        
+        if(Integer.parseInt(parts[2]) == UtilMethods.YES) {
+        	List<Photo> pp_photos = photoDAO.getProfilePhotosByUserId(Integer.parseInt(parts[0]));
+        	for(Photo p_photo:pp_photos) {
+        		photoDAO.updateProfilePhoto(p_photo.getPhotoId());
+        	}
+        }
         
         addPhoto(photo);
         

@@ -48,6 +48,9 @@ public class UserDetails implements Serializable{
 	@Column(name = "height")
 	private float height;
 	
+	@Column(name = "weight")
+	private float weight;
+	
 	@Column(name="mail_id")
     private String mailId;
 	
@@ -56,6 +59,9 @@ public class UserDetails implements Serializable{
 	
 	@Column(name="insta_follower")
     private String instaFollower;
+	
+	@Column(name="dob")
+    private String dateOfBirth;
 	
     public int getUserDetailsId() {
 		return userDetailsId;
@@ -157,6 +163,22 @@ public class UserDetails implements Serializable{
 		this.instaFollower = instaFollower;
 	}
 
+	public String getDateOfBirth() {
+		return dateOfBirth;
+	}
 
+	public void setDateOfBirth(String dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+	public float getWeight() {
+		return weight;
+	}
+
+	public void setWeight(float weight) {
+		this.weight = weight;
+	}
+
+   
 	
 }

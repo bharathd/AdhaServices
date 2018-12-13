@@ -22,6 +22,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 
 import com.app.adha.entity.UserService;
+import com.app.adha.entity.Scheduler;
 import com.app.adha.entity.ServiceDetails;
 import com.app.adha.service.UserServiceService;
 import com.app.adha.service.ServiceDetailsService;
@@ -92,6 +93,13 @@ public class UserServiceController {
 		userServiceService.deleteService(serviceId);
 		logger.info("Deleting  UserService " + serviceId);
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+	}
+	
+	@GetMapping("schedulers/{userid}/{date}")
+	public ResponseEntity<List<ServiceDetails>> getSchedulerServices(@PathVariable("userid") int userId, @PathVariable("date") String date) {
+		List<ServiceDetails> list = serviceDetailsService.getScheduleServiceDetails(userId, date);
+		logger.info("Fetching Schedulers with date " + userId + " " + date);
+		return new ResponseEntity<List<ServiceDetails>>(list, HttpStatus.OK);
 	}
 
 }

@@ -30,6 +30,18 @@ public class Payment implements Serializable{
 	@Column(name="plan_id")
     private int planId;
 	
+	@Column(name="transcation_id")
+	private String transactionId;
+	
+	@Column(name="phonenumber")
+	private String phonenumber;
+	
+	@Column(name="name")
+	private String name;
+	
+	@Column(name="amount")
+	private String amount;
+	
 	@Column(name="payment_date")
     private String paymentDate;
 
@@ -71,6 +83,38 @@ public class Payment implements Serializable{
 
 	public void setPaymentDate(String paymentDate) {
 		this.paymentDate = paymentDate;
+	}
+
+	public String getTransactionId() {
+		return transactionId;
+	}
+
+	public void setTransactionId(String transactionId) {
+		this.transactionId = transactionId;
+	}
+
+	public String getPhonenumber() {
+		return phonenumber;
+	}
+
+	public void setPhonenumber(String phonenumber) {
+		this.phonenumber = phonenumber;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getAmount() {
+		return amount;
+	}
+
+	public void setAmount(String amount) {
+		this.amount = amount;
 	}
 	
 	

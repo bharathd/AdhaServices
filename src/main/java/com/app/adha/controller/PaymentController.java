@@ -49,12 +49,11 @@ public class PaymentController {
 	}
     
     @PostMapping(value="/addpayment", headers="Accept=application/json")
-	public ResponseEntity<Void> addPayment(@RequestBody Payment payment, UriComponentsBuilder ucBuilder) {
-    	       paymentService.addPayment(payment);
+	public String addPayment(@RequestBody Payment payment, UriComponentsBuilder ucBuilder) {
+    	     String paymentURL =  paymentService.addPayment(payment);
     	       logger.info("Adding payment to database " + payment);
-               HttpHeaders headers = new HttpHeaders();
-               headers.setLocation(ucBuilder.path("/payment/{id}").buildAndExpand(payment.getPaymentId()).toUri());
-               return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+               
+               return paymentURL;
     }
 
 }

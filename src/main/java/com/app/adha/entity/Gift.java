@@ -32,6 +32,9 @@ public class Gift implements Serializable{
 	
 	@Column(name="status")
     private int status;
+	
+	@Column(name="amount")
+	private String amount;
 
 	public int getGiftId() {
 		return giftId;
@@ -71,6 +74,14 @@ public class Gift implements Serializable{
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	public String getAmount() {
+		return amount;
+	}
+
+	public void setAmount(String amount) {
+		this.amount = amount;
 	}
 	
 	

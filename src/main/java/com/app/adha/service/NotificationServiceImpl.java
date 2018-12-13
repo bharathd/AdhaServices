@@ -45,5 +45,10 @@ public class NotificationServiceImpl implements NotificationService{
 		notification.setCreatedDate(df.format(dateobj));
 		notificationDAO.addNotification(notification);
 	}
+	
+	@Override
+	public void updateNotificationStatus(int notificationId) {
+		notificationDAO.updateNotificationStatus(notificationId);
+	}	
 
 }

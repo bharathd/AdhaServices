@@ -30,9 +30,22 @@ public class PhotoDAOImpl implements PhotoDAO{
 		return (List<Photo>) entityManager.createQuery(hql).setParameter("id", userId).getResultList();
 	}	
 	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Photo> getProfilePhotosByUserId(int userId) {
+		String hql = "FROM Photo as p where p.userId = :id AND p.profilePhoto = :profilePhoto";
+		return (List<Photo>) entityManager.createQuery(hql).setParameter("id", userId).setParameter("profilePhoto", UtilMethods.YES).getResultList();
+	}	
+	
 	@Override
 	public void addPhoto(Photo photo) {
 		entityManager.persist(photo);
+	}
+	
+	@Override
+	public void updateProfilePhoto(int photoId) {
+		String update_query = "update Photo set profilePhoto = :profilePhoto where id = :id";
+		entityManager.createQuery(update_query).setParameter("profilePhoto", -1).setParameter("id", photoId).executeUpdate();
 	}
 	
 	@Override

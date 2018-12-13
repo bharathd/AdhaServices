@@ -48,6 +48,7 @@ public class UserServiceServiceImpl implements UserServiceService{
 		user_service.setCreatedBy(service.getCreatedBy());
 		user_service.setServiceName(service.getServiceName());
 		user_service.setStatus(service.getStatus());
+		user_service.setAmount(service.getAmount());
 		serviceDAO.updateService(user_service);
 		return user_service;
 	}

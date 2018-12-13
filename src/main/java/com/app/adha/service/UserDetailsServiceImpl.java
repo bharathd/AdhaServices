@@ -24,6 +24,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 	
 	//getting current date and time using Date class
     DateFormat df = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
+    DateFormat dob = new SimpleDateFormat("yy/MM/dd");
     Date dateobj = new Date();
 	
 	@Override
@@ -54,8 +55,8 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 		usr_details.setLoggedType(userDetails.getLoggedType());
 		usr_details.setInstaId(userDetails.getInstaId());
 		usr_details.setInstaFollower(userDetails.getInstaFollower());
-		
-		
+		usr_details.setDateOfBirth(userDetails.getDateOfBirth());
+		usr_details.setWeight(userDetails.getWeight());
 		userDetailsDAO.updateUserDetails(userDetails);
 		
 		String description = "Updated details successfully";

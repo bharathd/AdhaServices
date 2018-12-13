@@ -33,8 +33,22 @@ public class SchedulerDAOImpl implements SchedulerDAO{
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Scheduler> getSchedulersByDate(int userId, String start_date, String end_date) {
-		String hql = "FROM Scheduler where (modelId = '" + userId + "' OR customerId = '" + userId + "' OR adminId = '" + userId + "') AND (startTime BETWEEN '"+ start_date + "' AND '" + end_date + "')";
+	public List<Scheduler> getAllSchedulersByUserId(int userId) {
+		String hql = "FROM Scheduler where (modelId = '" + userId + "' OR customerId = '" + userId + "' OR adminId = '" + userId + "')";
+		return (List<Scheduler>) entityManager.createQuery(hql).getResultList();
+	}	
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Scheduler> getSchedulersByDate(int userId, String start_date, String end_date, int date) {
+		String hql ="";
+		if(date == 0) {
+		hql = "FROM Scheduler where (modelId = '" + userId + "' OR customerId = '" + userId + "' OR adminId = '" + userId + "') AND (startTime BETWEEN '"+ start_date + "' AND '" + end_date + "')";
+		}else if(date == -1) {
+		hql = "FROM Scheduler where (modelId = '" + userId + "' OR customerId = '" + userId + "' OR adminId = '" + userId + "') AND startTime < '"+ start_date +"'";
+		}else if(date == 1) {
+		hql = "FROM Scheduler where (modelId = '" + userId + "' OR customerId = '" + userId + "' OR adminId = '" + userId + "') AND startTime > '"+ end_date +"'";	
+		}
 		return (List<Scheduler>) entityManager.createQuery(hql).getResultList();
 	}	
 	

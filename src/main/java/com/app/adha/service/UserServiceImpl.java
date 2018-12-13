@@ -122,16 +122,87 @@ public class UserServiceImpl implements UserService{
 		}
     }
 	
+	
+	public String createUser(User user){
+		StringBuffer service_details= new StringBuffer();
+		List<User> list_user = userDAO.getUserByPhoneNumber(user.getPhoneNumber());
+		
+		if(list_user.size()>0) {
+			otpService.addOrUpdateOtp(user.getPhoneNumber());
+			return "Account Already exist!";
+		}else {
+		//this is for username field value
+		int maxUserId = maxRecordId()+1;
+		
+		if(user.getRole() == UtilMethods.ROLE_MODEL){
+			user.setUserName("MODEL-" + maxUserId);
+			user.setStatus(UtilMethods.ACCOUNT_INPROGRESS);
+			user.setTerms(UtilMethods.NO);
+		}else if(user.getRole() == UtilMethods.ROLE_CUSTOMER){
+			user.setUserName("CUSTOMER-" + maxUserId);
+			user.setStatus(UtilMethods.ACCOUNT_ACTIVE);
+			user.setTerms(UtilMethods.YES);
+		}else if(user.getRole() == UtilMethods.ROLE_ADMIN && user.getCreatedBy()>0) {
+			user.setUserName("ADMIN-" + maxUserId);
+			user.setStatus(UtilMethods.ACCOUNT_ACTIVE);
+			user.setTerms(UtilMethods.YES);
+		}else if(user.getRole() == UtilMethods.ROLE_SUPERADMIN && user.getCreatedBy()>0) {
+			user.setUserName("SUPERADMIN-" + maxUserId);
+			user.setStatus(UtilMethods.ACCOUNT_ACTIVE);
+			user.setTerms(UtilMethods.YES);
+		}
+		if((user.getRole() == UtilMethods.ROLE_MODEL) || (user.getRole() == UtilMethods.ROLE_CUSTOMER) || (user.getRole() == UtilMethods.ROLE_ADMIN && user.getCreatedBy()>0) || (user.getRole() == UtilMethods.ROLE_SUPERADMIN && user.getCreatedBy()>0)) {
+		user.setCreatedDate(df.format(dateobj));
+		
+		
+        userDAO.addUser(user);
+        String description = "Admin added your Account";
+        notificationService.addNotification(user.getCreatedBy(), maxUserId, description);
+        
+        List<com.app.adha.entity.UserService> list_userservices = userServiceService.getAllServices();
+        for(com.app.adha.entity.UserService userService : list_userservices) {
+        	service_details.append(userService.getServiceName()+"-"+UtilMethods.YES+",");
+        }
+        ServiceDetails serviceDetails = new ServiceDetails();
+        serviceDetails.setUserId(user.getUserId());
+        serviceDetails.setServices(service_details.toString());
+        serviceDetailsService.addORUpdateServiceDetails(serviceDetails);
+        return "Account created";
+		}
+		return "Please Contact SuperAdmin";
+		}
+    }
+	
+	
 	@Override
 	public User updateUser(User user) {
-		User usr = getUserById(user.getUserId());
-		usr.setStatus(user.getStatus());
-		usr.setTerms(user.getTerms());
-		userDAO.updateUser(usr);
-		String description = "Upddated your account details";
-        notificationService.addNotification(usr.getCreatedBy(), usr.getUserId(), description);
-
-		return usr;
+		User usr = new User();
+		List<User> user_list = userDAO.getUserByPhoneNumber(user.getPhoneNumber());
+		if(user_list.size()>0) {
+			if((user_list.get(0).getPhoneNumber().equals(user.getPhoneNumber())) && (user_list.get(0).getUserId() != user.getUserId())){
+				return usr;
+			}else {
+		      usr = getUserById(user.getUserId());
+		      usr.setPhoneNumber(user.getPhoneNumber());
+		      usr.setStatus(user.getStatus());
+		      usr.setTerms(user.getTerms());
+		      usr.setUserDetails(null);
+		      userDAO.updateUser(usr);
+		      String description = "Upddated your account details";
+              notificationService.addNotification(usr.getCreatedBy(), usr.getUserId(), description);
+              return usr;
+			}
+		}else {
+			usr = getUserById(user.getUserId());
+		      usr.setPhoneNumber(user.getPhoneNumber());
+		      usr.setStatus(user.getStatus());
+		      usr.setTerms(user.getTerms());
+		      userDAO.updateUser(usr);
+		      String description = "Upddated your account details";
+            notificationService.addNotification(usr.getCreatedBy(), usr.getUserId(), description);
+            return usr;
+		}
+		
 	}
 	
 	@Override

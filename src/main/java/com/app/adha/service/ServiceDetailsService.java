@@ -8,5 +8,6 @@ public interface ServiceDetailsService {
 	
 	List<ServiceDetails> getServiceDetailsByUserId(int userId);
     void addORUpdateServiceDetails(ServiceDetails serviceDetails);
+    List<ServiceDetails> getScheduleServiceDetails(int userId, String scheduleDate);
 
 }

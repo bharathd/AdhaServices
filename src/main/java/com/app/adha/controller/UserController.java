@@ -21,7 +21,7 @@ import java.util.List;
  * Created by Anil on 03/10/18.
  */
 
-@CrossOrigin
+@CrossOrigin(origins = "*", maxAge = 4800, allowCredentials = "false", allowedHeaders = "*")
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -31,7 +31,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{id}")
     public ResponseEntity<User> getUserById(@PathVariable("id") int id) {
     	logger.info("Fetching User with id " + id);
         User user = userService.getUserById(id);
@@ -56,7 +56,7 @@ public class UserController {
 		return new ResponseEntity<List<User>>(list, HttpStatus.OK);
 	}
     
-    @PostMapping(value="/login", headers="Accept=application/json")
+    @PostMapping(value="/login")
 	public ResponseEntity<List<User>> addUser(@RequestBody User user) {
     	
     	    if(user.getPhoneNumber().equals("")|| user.getPhoneNumber().equals(null)) {
@@ -77,8 +77,29 @@ public class UserController {
     	    
     }
     
+    @PostMapping(value="/createuser")
+	public ResponseEntity<List<User>> createUser(@RequestBody User user) {
+    	
+    	    if(user.getPhoneNumber().equals("")|| user.getPhoneNumber().equals(null)) {
+    	    	return new ResponseEntity<List<User>>(HttpStatus.BAD_REQUEST);
+    	    }else {
+    	    String message =  userService.createUser(user);
+    	    logger.info("Adding Users " + user);
+    	    List<User> user_info = userService.getUserByPhoneNumber(user.getPhoneNumber());
+    	    if(message.equals("Account created")) 
+    	      return new ResponseEntity<List<User>>(user_info, HttpStatus.CREATED);
+    	    else if(message.equals("Please Contact SuperAdmin"))
+    	    	return new ResponseEntity<List<User>>(user_info, HttpStatus.FORBIDDEN);
+    	    else 
+    	      return new ResponseEntity<List<User>>(user_info,HttpStatus.OK);
+    	    }
+    	    	
+    	  
+    	    
+    }
     
-	@PutMapping("/updateuser")
+    
+	@PutMapping(value="/updateuser", headers="Accept=application/json")
 	public ResponseEntity<User> updateUser(@RequestBody User user) {
 		User update_user = userService.updateUser(user);
 		logger.info("Updating User " + update_user);
@@ -86,7 +107,7 @@ public class UserController {
 	}
 	
     
-	@DeleteMapping("/deleteuser/{id}")
+	@DeleteMapping(value="/deleteuser/{id}", headers="Accept=application/json")
 	public ResponseEntity<Void> deleteUser(@PathVariable("id") Integer id) {
 		userService.deleteUser(id);
 		logger.info("Deleting  User " + id);

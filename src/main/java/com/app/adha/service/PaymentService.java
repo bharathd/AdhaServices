@@ -8,5 +8,5 @@ public interface PaymentService {
 
 	List<Payment> getAllPayments();
 	Payment getPaymentById(int paymentId);
-    void addPayment(Payment payment);
+    String addPayment(Payment payment);
 }

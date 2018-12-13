@@ -44,6 +44,18 @@ public class GiftServiceImpl implements GiftService{
 	}
 	
 	@Override
+	public Gift updateGift(Gift gift) {
+		Gift gift_details = getGiftById(gift.getGiftId());
+		gift_details.setCreatedBy(gift.getCreatedBy());
+		gift_details.setCreatedDate(df.format(dateobj));
+		gift_details.setAmount(gift.getAmount());
+		gift_details.setGiftName(gift.getGiftName());
+		gift_details.setStatus(gift.getStatus());
+		giftDAO.updateGift(gift_details);
+		return gift_details;
+	}
+	
+	@Override
 	public void deleteGift(int giftId) {
 		giftDAO.deleteGift(giftId);
 	}

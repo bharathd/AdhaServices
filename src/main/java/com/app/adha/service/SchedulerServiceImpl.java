@@ -31,7 +31,12 @@ public class SchedulerServiceImpl implements SchedulerService{
 	public Scheduler getSchedulerById(int schedulerId) {
 		Scheduler scheduler = schedulerDAO.getSchedulerById(schedulerId);
 		return scheduler;
-	}	
+	}
+	
+	@Override
+	public List<Scheduler> getAllSchedulersByUserId(int userId){
+		return schedulerDAO.getAllSchedulersByUserId(userId);
+	}
 	
 	@Override
 	public List<Scheduler> getAllSchedulers(){
@@ -89,7 +94,7 @@ public class SchedulerServiceImpl implements SchedulerService{
 				e.printStackTrace();
 			}
 		
-		return schedulerDAO.getSchedulersByDate(userId, start_date, end_date);
+		return schedulerDAO.getSchedulersByDate(userId, start_date, end_date, date);
 	}
 	
 	
